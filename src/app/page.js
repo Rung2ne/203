@@ -95,19 +95,19 @@ export default function BusTracker() {
       ) : (
         <div className="flex flex-col items-center">
           
-          <div className="w-full grid grid-cols-[1fr_180px_40px_60px_40px_180px_1fr] text-center mb-4 text-xs font-bold text-gray-500 tracking-wider">
+          <div className="w-max grid grid-cols-[130px_140px_40px_60px_40px_140px_130px] text-center mb-4 text-xs font-bold text-gray-500 tracking-wider mx-auto">
             <div className="text-right pr-4">하행 (온천장 방면) ↓</div>
             <div></div><div></div><div></div><div></div><div></div>
             <div className="text-left pl-4">상행 (산성마을 방면) ↑</div>
           </div>
 
-          <div className="w-full">
+          <div className="w-full overflow-x-auto pb-4 scrollbar-hide">
             {PAIRED_ROWS.map((row, rIdx) => {
               const leftBuses = row.left ? buses.filter(bus => bus.bstopidx === row.left.idx) : [];
               const rightBuses = row.right ? buses.filter(bus => bus.bstopidx === row.right.idx) : [];
 
               return (
-                <div key={rIdx} className={`grid grid-cols-[1fr_180px_40px_60px_40px_180px_1fr] items-center relative ${row.isLoopBottom ? 'h-44' : 'h-16'}`}>
+                <div key={rIdx} className={`grid grid-cols-[130px_140px_40px_60px_40px_140px_130px] items-center relative mx-auto ${row.isLoopBottom ? 'h-44' : 'h-16'}`}>
                   
                   <div className="flex flex-col items-end justify-center pr-3 gap-1">
                     {!row.isLoopBottom && leftBuses.map((bus, bIdx) => {
