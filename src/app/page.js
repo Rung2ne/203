@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import carInfo from '@/data/car_info.json';
 import stopInfo from '@/data/stop_info.json';
+import './font.css';
 
 const PAIRED_ROWS = [
   { left: { idx: 1, name: "죽전마을" }, right: { idx: 34, name: "죽전마을" } },
