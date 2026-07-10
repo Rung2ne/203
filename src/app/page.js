@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import carInfo from '@/data/car_info.json';
 import stopInfo from '@/data/stop_info.json';
+import behindStories from '@/data/behind_info.json';
 import './font.css';
 
 const PAIRED_ROWS = [
@@ -43,6 +44,7 @@ export default function BusTracker() {
   const [selectedStop, setSelectedStop] = useState(null);
   const [activeTab, setActiveTab] = useState('main');
   const [isTimetableOpen, setIsTimetableOpen] = useState(false);
+  const [openStoryId, setOpenStoryId] = useState(null);
 
   const historicalCars = [
     { carNum: "2965", model: "'09 대우 BS090 로얄미디 F/L", fuel: "NGV", engine: "GE08TI", displacement: "8.0L", mileage: "585,419km(추정)", date: "2018-03", regDate: "2009/03/19", cancelDate: "2018/03/30", isFirst: true, rowSpan: 4 },
@@ -55,10 +57,9 @@ export default function BusTracker() {
     { carNum: "2966", model: "'20 NSAC 저상 2차 F/L", fuel: "CNG", engine: "C6AF", displacement: "11.6L", mileage: "345,669km", date: "2026-07", regDate: "2020/05/15", cancelDate: "운행 중", isFirst: false },
   ];
 
-  const behindStories = [
-    { title: "🏔️ 성산과 대륙산악회", content: "t" },
-    { title: "🍾 산성막걸리", content: "t" }
-  ];
+  const toggleStory = (id) => {
+    setOpenStoryId(openStoryId === id ? null : id);
+  };
 
   const fetchBusData = async () => {
     try {
@@ -103,291 +104,318 @@ export default function BusTracker() {
   };
 
   return (
-    <main className="max-w-5xl mx-auto min-h-screen bg-gray-950 text-gray-100 py-10 font-custom select-none">
-      <div className="border-b border-gray-800 bg-gray-900/50 sticky top-0 backdrop-blur-md z-40 mb-8 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4 rounded-2xl mx-4">
+    <main className="max-w-5xl mx-auto min-h-screen bg-gray-950 text-gray-100 py-10 font-custom select-none px-4">
+      <div className="border-b border-gray-800 bg-gray-900/50 sticky top-0 backdrop-blur-md z-40 mb-8 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4 rounded-2xl">
         <div className="flex items-center gap-2">
           <span className="text-xl font-black text-emerald-400 tracking-wider cursor-pointer" onClick={() => setActiveTab('main')}>
             203번 가이드
           </span>
-          <span className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded-md font-mono">v1.3.7</span>
+          <span className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded-md font-mono">v1.3.19</span>
         </div>
 
-      <div className="flex gap-1 bg-gray-950 p-1 rounded-xl border border-gray-800 text-xs font-bold">
-        <button onClick={() => setActiveTab('main')} className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'main' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>노선도</button>
-        <button onClick={() => setActiveTab('records')} className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'records' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>역대 차량현황</button>
-        <button onClick={() => setActiveTab('behind')} className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'behind' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>비하인드 스토리</button>
-        <button onClick={() => setActiveTab('credits')} className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'credits' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>크레딧</button>
+        <div className="flex gap-1 bg-gray-950 p-1 rounded-xl border border-gray-800 text-xs font-bold">
+          <button onClick={() => setActiveTab('main')} className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'main' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>노선도</button>
+          <button onClick={() => setActiveTab('records')} className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'records' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>역대 차량현황</button>
+          <button onClick={() => setActiveTab('behind')} className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'behind' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>비하인드 스토리</button>
+          <button onClick={() => setActiveTab('credits')} className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'credits' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>크레딧</button>
+        </div>
       </div>
-    </div>
 
-    {activeTab === 'main' && (
-      <>
-        <header className="mb-6 px-4 flex flex-col sm:flex-row justify-between items-center border-b border-gray-900 pb-5 gap-4">
-          <div className="text-center sm:text-left">
-            <h1 className="text-3xl font-black text-yellow-400 tracking-widest font-mono">203번 운행 현황</h1>
-            <p className="text-xs text-gray-500 mt-2 tracking-wide">💡 정류장 이름을 클릭하면 추천하는 주변에서 할 일과 정류장 이름의 유래를 볼 수 있어요!</p>
-          </div>
-          <div className="flex gap-2">
-            <button 
-              onClick={fetchBusData} 
-              disabled={loading}
-              className="bg-gray-900 border border-emerald-500/30 hover:bg-emerald-950/40 text-emerald-400 text-xs font-bold px-3 py-2 rounded-xl transition-all shadow-md flex items-center gap-1 disabled:opacity-50"
-            >
-              {loading ? '🔄 갱신 중...' : '🔄 새로고침'}
-            </button>
-            <button 
-              onClick={() => setIsTimetableOpen(true)}
-              className="bg-gray-900 border border-emerald-500/30 hover:bg-emerald-950/40 text-emerald-400 text-xs font-bold px-3 py-2 rounded-xl transition-all shadow-md flex items-center gap-1"
-            >
-              📅 운행 시간표
-            </button>
-          </div>
-        </header>
+      {activeTab === 'main' && (
+        <div className="w-full">
+          <header className="mb-6 flex flex-col sm:flex-row justify-between items-center border-b border-gray-900 pb-5 gap-4">
+            <div className="text-center sm:text-left">
+              <h1 className="text-3xl font-black text-yellow-400 tracking-widest font-mono">203번 운행 현황</h1>
+              <p className="text-xs text-gray-500 mt-2 tracking-wide">💡 정류장 이름을 클릭하면 추천하는 주변에서 할 일과 정류장 이름의 유래를 볼 수 있어요!</p>
+            </div>
+            <div className="flex gap-2">
+              <button 
+                onClick={fetchBusData} 
+                disabled={loading}
+                className="bg-gray-900 border border-emerald-500/30 hover:bg-emerald-950/40 text-emerald-400 text-xs font-bold px-3 py-2 rounded-xl transition-all shadow-md flex items-center gap-1 disabled:opacity-50"
+              >
+                {loading ? '🔄 갱신 중...' : '🔄 새로고침'}
+              </button>
+              <button 
+                onClick={() => setIsTimetableOpen(true)}
+                className="bg-gray-900 border border-emerald-500/30 hover:bg-emerald-950/40 text-emerald-400 text-xs font-bold px-3 py-2 rounded-xl transition-all shadow-md flex items-center gap-1"
+              >
+                📅 운행 시간표
+              </button>
+            </div>
+          </header>
 
-      {loading ? (
-        <div className="text-center text-gray-600 animate-pulse text-sm">시스템 로딩 중...</div>
-      ) : (
-        <div className="flex flex-col items-center">
-          
-          <div className="w-full overflow-x-auto pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-            <div className="min-w-[760px] px-6 md:mx-auto flex flex-col">
-              <div className="grid grid-cols-[145px_145px_40px_60px_40px_145px_145px] text-center mb-4 text-xs font-bold text-gray-500 tracking-wider">
-                <div className="text-right pr-4">하행 (온천장 방면) ↓</div>
-                <div></div><div></div><div></div><div></div><div></div>
-                <div className="text-left pl-4">상행 (산성마을 방면) ↑</div>
-              </div>
-
-            {PAIRED_ROWS.map((row, rIdx) => {
-              const leftBuses = row.left ? buses.filter(bus => bus.bstopidx === row.left.idx) : [];
-              const rightBuses = row.right ? buses.filter(bus => bus.bstopidx === row.right.idx) : [];
-
-              return (
-                <div key={rIdx} className={`grid grid-cols-[145px_145px_40px_60px_40px_145px_145px] items-center relative ${row.isLoopBottom ? 'h-44' : 'h-16'}`}>
+          {loading ? (
+            <div className="text-center text-gray-600 animate-pulse text-sm">시스템 로딩 중...</div>
+          ) : (
+            <div className="flex flex-col items-center">
+              <div className="w-full overflow-x-auto pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                <div className="min-w-[760px] mx-auto flex flex-col relative">
                   
-                  <div className="flex flex-col items-end justify-center pr-3 gap-1">
-                    {!row.isLoopBottom && leftBuses.map((bus, bIdx) => {
-                      const plateNumber = bus.carno.slice(-4);
-                      const cleanCarno = bus.carno.replace('부산', '').trim();
-                      const details = carInfo[cleanCarno] || carInfo[bus.carno];
+                  <div className="grid grid-cols-[145px_145px_40px_60px_40px_145px_145px] text-center mb-4 text-xs font-bold text-gray-500 tracking-wider">
+                    <div className="text-right pr-4">하행 (온천장 방면) ↓</div>
+                    <div></div><div></div><div></div><div></div><div></div>
+                    <div className="text-left pl-4">상행 (산성마을 방면) ↑</div>
+                  </div>
+
+                  <div className="relative flex flex-col">
+                    {PAIRED_ROWS.map((row, rIdx) => {
+                      const leftBuses = row.left ? buses.filter(bus => bus.bstopidx === row.left.idx) : [];
+                      const rightBuses = row.right ? buses.filter(bus => bus.bstopidx === row.right.idx) : [];
 
                       return (
-                        <div 
-                          key={bIdx} 
-                          onClick={() => setSelectedBus({ bus, details: details || null })} 
-                          className="flex items-center gap-2 bg-gray-900/90 border border-blue-500/40 rounded-xl p-1.5 pl-3 pr-2 shadow-md hover:border-yellow-400 cursor-pointer transition-all active:scale-95 w-32 justify-between"
-                        >
-                          <div className="text-blue-400 font-black text-sm font-mono">{plateNumber} ↓</div>
-                          <BusIcon plateNumber={plateNumber} />
-                        </div>
-                      );
-                    })}
-                  </div>
+                        <div key={rIdx} className={`grid grid-cols-[145px_145px_40px_60px_40px_145px_145px] items-center relative ${row.isLoopBottom ? 'h-44' : 'h-16'}`}>
+                          
+                          <div className="flex flex-col items-end justify-center pr-3 gap-1">
+                            {!row.isLoopBottom && leftBuses.map((bus, bIdx) => {
+                              const plateNumber = bus.carno.slice(-4);
+                              const cleanCarno = bus.carno.replace('부산', '').trim();
+                              const details = carInfo[cleanCarno] || carInfo[bus.carno];
 
-                  <div 
-                    onClick={() => handleStopClick(row.left)}
-                    className={`text-right pr-4 text-xs font-semibold tracking-tight cursor-pointer hover:text-white transition-colors group whitespace-nowrap ${leftBuses.length > 0 ? 'text-blue-400 font-bold' : 'text-gray-400'}`}
-                  >
-                    {!row.isLoopBottom && row.left ? (
-                      <>
-                        <span className="text-xxs text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity mr-1">🔍</span>
-                        {row.left.name} <span className="text-xxs text-gray-700 font-mono">#{row.left.idx}</span>
-                      </>
-                    ) : ""}
-                  </div>
+                              return (
+                                <div 
+                                  key={bIdx} 
+                                  onClick={() => setSelectedBus({ bus, details: details || null })} 
+                                  className="flex items-center gap-2 bg-gray-900/90 border border-blue-500/40 rounded-xl p-1.5 pl-3 pr-2 shadow-md hover:border-yellow-400 cursor-pointer transition-all active:scale-95 w-32 justify-between"
+                                >
+                                  <div className="text-blue-400 font-black text-sm font-mono">{plateNumber} ↓</div>
+                                  <BusIcon plateNumber={plateNumber} />
+                                </div>
+                              );
+                            })}
+                          </div>
 
-                  {row.isLoopBottom ? (
-                    <div className="col-start-3 col-end-6 h-full relative flex justify-center">
-                      <div className="absolute top-0 left-[17px] right-[17px] h-[46px] border-l-[6px] border-r-[6px] border-b-[6px] border-blue-600 rounded-b-full"></div>
-                      
-                      <div 
-                        onClick={() => handleStopClick(row.left)} 
-                        className={`absolute top-[43px] -translate-y-1/2 w-3.5 h-3.5 rounded-full z-10 cursor-pointer transition-all border-2 ${leftBuses.length > 0 ? 'bg-yellow-400 border-yellow-300 scale-125 shadow-[0_0_10px_rgba(234,179,8,0.6)]' : 'bg-gray-950 border-gray-600 hover:border-white'}`}
-                      ></div>
-                      
-                      <div 
-                        onClick={() => handleStopClick(row.left)}
-                        className={`absolute top-[60px] text-xs font-semibold tracking-tight cursor-pointer hover:text-white transition-colors whitespace-nowrap z-20 flex items-center
-                          ${leftBuses.length > 0 ? 'text-blue-400 font-bold drop-shadow-md scale-105' : 'text-gray-400'}`}
-                      >
-                        {row.left.name} <span className="text-xxs opacity-60 font-mono ml-1">#{row.left.idx}</span>
-                      </div>
+                          <div 
+                            onClick={() => handleStopClick(row.left)}
+                            className={`text-right pr-4 text-xs font-semibold tracking-tight cursor-pointer hover:text-white transition-colors group whitespace-nowrap ${leftBuses.length > 0 ? 'text-blue-400 font-bold' : 'text-gray-400'}`}
+                          >
+                            {!row.isLoopBottom && row.left ? (
+                              <>
+                                <span className="text-xxs text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity mr-1">🔍</span>
+                                {row.left.name} <span className="text-xxs text-gray-700 font-mono">#{row.left.idx}</span>
+                              </>
+                            ) : ""}
+                          </div>
 
-                      <div className="absolute top-[86px] flex flex-col gap-2 items-center z-30 w-full">
-                        {leftBuses.map((bus, bIdx) => {
-                          const plateNumber = bus.carno.slice(-4);
-                          const cleanCarno = bus.carno.replace('부산', '').trim();
-                          const details = carInfo[cleanCarno] || carInfo[bus.carno];
+                          {row.isLoopBottom ? (
+                            <div className="col-start-3 col-end-6 h-full relative flex justify-center">
+                              <div className="absolute top-0 left-[17px] right-[17px] h-[46px] border-l-[6px] border-r-[6px] border-b-[6px] border-blue-600 rounded-b-full"></div>
+                              
+                              <div 
+                                onClick={() => handleStopClick(row.left)} 
+                                className={`absolute top-[43px] -translate-y-1/2 w-3.5 h-3.5 rounded-full z-10 cursor-pointer transition-all border-2 ${leftBuses.length > 0 ? 'bg-yellow-400 border-yellow-300 scale-125 shadow-[0_0_10px_rgba(234,179,8,0.6)]' : 'bg-gray-950 border-gray-600 hover:border-white'}`}
+                              ></div>
+                              
+                              <div 
+                                onClick={() => handleStopClick(row.left)}
+                                className={`absolute top-[60px] text-xs font-semibold tracking-tight cursor-pointer hover:text-white transition-colors whitespace-nowrap z-20 flex items-center
+                                  ${leftBuses.length > 0 ? 'text-blue-400 font-bold drop-shadow-md scale-105' : 'text-gray-400'}`}
+                              >
+                                {row.left.name} <span className="text-xxs opacity-60 font-mono ml-1">#{row.left.idx}</span>
+                              </div>
 
-                          return (
-                            <div 
-                              key={bIdx} 
-                              onClick={() => setSelectedBus({ bus, details: details || null })} 
-                              className="flex items-center gap-3 bg-gray-900/90 border border-blue-500/40 rounded-xl p-1.5 px-4 shadow-md hover:border-yellow-400 cursor-pointer transition-all active:scale-95 w-fit"
-                            >
-                              <div className="text-blue-400 font-black text-sm font-mono">{plateNumber} ↓</div>
-                              <BusIcon plateNumber={plateNumber} />
+                              <div className="absolute top-[86px] flex flex-col gap-2 items-center z-30 w-full">
+                                {leftBuses.map((bus, bIdx) => {
+                                  const plateNumber = bus.carno.slice(-4);
+                                  const cleanCarno = bus.carno.replace('부산', '').trim();
+                                  const details = carInfo[cleanCarno] || carInfo[bus.carno];
+
+                                  return (
+                                    <div 
+                                      key={bIdx} 
+                                      onClick={() => setSelectedBus({ bus, details: details || null })} 
+                                      className="flex items-center gap-3 bg-gray-900/90 border border-blue-500/40 rounded-xl p-1.5 px-4 shadow-md hover:border-yellow-400 cursor-pointer transition-all active:scale-95 w-fit"
+                                    >
+                                      <div className="text-blue-400 font-black text-sm font-mono">{plateNumber} ↓</div>
+                                      <BusIcon plateNumber={plateNumber} />
+                                    </div>
+                                  );
+                                })}
+                              </div>
                             </div>
-                          );
-                        })}
-                      </div>
-                    </div>
-                  ) : (
-                    <>
-                      <div className="relative h-full w-full flex justify-center items-center">
-                        <div className="absolute top-0 bottom-0 left-1/2 w-1.5 bg-blue-600 -translate-x-1/2"></div>
-                        {row.left && (
-                          <div onClick={() => handleStopClick(row.left)} className={`w-3.5 h-3.5 rounded-full z-10 cursor-pointer transition-all border-2 ${leftBuses.length > 0 ? 'bg-yellow-400 border-yellow-300 scale-125 shadow-[0_0_10px_rgba(234,179,8,0.6)]' : 'bg-gray-950 border-gray-600 hover:border-white'}`}></div>
-                        )}
-                      </div>
+                          ) : (
+                            <>
+                              <div className="relative h-full w-full flex justify-center items-center">
+                                <div className="absolute top-0 bottom-0 left-1/2 w-1.5 bg-blue-600 -translate-x-1/2"></div>
+                                {row.left && (
+                                  <div onClick={() => handleStopClick(row.left)} className={`w-3.5 h-3.5 rounded-full z-10 cursor-pointer transition-all border-2 ${leftBuses.length > 0 ? 'bg-yellow-400 border-yellow-300 scale-125 shadow-[0_0_10px_rgba(234,179,8,0.6)]' : 'bg-gray-950 border-gray-600 hover:border-white'}`}></div>
+                                )}
+                              </div>
 
-                      <div className="relative h-full w-full"></div>
+                              <div className="relative h-full w-full"></div>
 
-                      <div className="relative h-full w-full flex justify-center items-center">
-                        <div className="absolute top-0 bottom-0 left-1/2 w-1.5 bg-blue-600 -translate-x-1/2"></div>
-                        {row.right && (
-                          <div onClick={() => handleStopClick(row.right)} className={`w-3.5 h-3.5 rounded-full z-10 cursor-pointer transition-all border-2 ${rightBuses.length > 0 ? 'bg-yellow-400 border-yellow-300 scale-125 shadow-[0_0_10px_rgba(234,179,8,0.6)]' : 'bg-gray-950 border-gray-600 hover:border-white'}`}></div>
-                        )}
-                      </div>
-                    </>
-                  )}
+                              <div className="relative h-full w-full flex justify-center items-center">
+                                <div className="absolute top-0 bottom-0 left-1/2 w-1.5 bg-blue-600 -translate-x-1/2"></div>
+                                {row.right && (
+                                  <div onClick={() => handleStopClick(row.right)} className={`w-3.5 h-3.5 rounded-full z-10 cursor-pointer transition-all border-2 ${rightBuses.length > 0 ? 'bg-yellow-400 border-yellow-300 scale-125 shadow-[0_0_10px_rgba(234,179,8,0.6)]' : 'bg-gray-950 border-gray-600 hover:border-white'}`}></div>
+                                )}
+                              </div>
+                            </>
+                          )}
 
-                  <div 
-                    onClick={() => handleStopClick(row.right)}
-                    className={`text-left pl-4 text-xs font-semibold tracking-tight cursor-pointer hover:text-white transition-colors group whitespace-nowrap ${rightBuses.length > 0 ? 'text-green-400 font-bold' : 'text-gray-400'}`}
-                  >
-                    {row.right ? (
-                      <>
-                        <span className="text-xxs text-gray-700 font-mono">#{row.right.idx}</span> {row.right.name}
-                        <span className="text-xxs text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity ml-1">🔍</span>
-                      </>
-                    ) : ""}
-                  </div>
+                          <div 
+                            onClick={() => handleStopClick(row.right)}
+                            className={`text-left pl-4 text-xs font-semibold tracking-tight cursor-pointer hover:text-white transition-colors group whitespace-nowrap ${rightBuses.length > 0 ? 'text-green-400 font-bold' : 'text-gray-400'}`}
+                          >
+                            {row.right ? (
+                              <>
+                                <span className="text-xxs text-gray-700 font-mono">#{row.right.idx}</span> {row.right.name}
+                                <span className="text-xxs text-gray-600 opacity-0 group-hover:opacity-100 transition-opacity ml-1">🔍</span>
+                              </>
+                            ) : ""}
+                          </div>
 
-                  <div className="flex flex-col items-start justify-center pl-3 gap-1">
-                    {rightBuses.map((bus, bIdx) => {
-                      const plateNumber = bus.carno.slice(-4);
-                      const cleanCarno = bus.carno.replace('부산', '').trim();
-                      const details = carInfo[cleanCarno] || carInfo[bus.carno];
+                          <div className="flex flex-col items-start justify-center pl-3 gap-1">
+                            {rightBuses.map((bus, bIdx) => {
+                              const plateNumber = bus.carno.slice(-4);
+                              const cleanCarno = bus.carno.replace('부산', '').trim();
+                              const details = carInfo[cleanCarno] || carInfo[bus.carno];
 
-                      return (
-                        <div 
-                          key={bIdx} 
-                          onClick={() => setSelectedBus({ bus, details: details || null })}
-                          className="flex items-center gap-2 bg-gray-900/90 border border-green-500/40 rounded-xl p-1.5 pr-3 pl-2 shadow-md hover:border-yellow-400 cursor-pointer transition-all active:scale-95 w-32 justify-between"
-                        >
-                          <BusIcon plateNumber={plateNumber} />
-                          <div className="text-left text-green-400 font-black text-sm font-mono">↑ {plateNumber}</div>
+                              return (
+                                <div 
+                                  key={bIdx} 
+                                  onClick={() => setSelectedBus({ bus, details: details || null })}
+                                  className="flex items-center gap-2 bg-gray-900/90 border border-green-500/40 rounded-xl p-1.5 pr-3 pl-2 shadow-md hover:border-yellow-400 cursor-pointer transition-all active:scale-95 w-32 justify-between"
+                                >
+                                  <BusIcon plateNumber={plateNumber} />
+                                  <div className="text-left text-green-400 font-black text-sm font-mono">↑ {plateNumber}</div>
+                                </div>
+                              );
+                            })}
+                          </div>
+
                         </div>
                       );
                     })}
                   </div>
 
                 </div>
-              );
-            })}
+              </div>
             </div>
-          </div>
+          )}
         </div>
-        )}
-        </>
       )}
 
-    {activeTab === 'records' && (
-      <div className="px-4 max-w-5xl mx-auto">
-        <div className="mb-6">
-          <h2 className="text-lg font-black text-white">역대 차량현황</h2>
-          <p className="text-xs text-gray-500 mt-0.5">203번 버스로 산성마을과 온천장 사이를 이어온 차량들의 상세 제원입니다.</p>
-        </div>
-        <div className="w-full overflow-x-auto bg-gray-900 border border-gray-800 rounded-2xl shadow-xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-          <table className="w-full border-collapse border-hidden text-left text-xs min-w-max whitespace-nowrap">
-            <thead>
-              <tr className="bg-gray-950 text-gray-400 font-bold border-b border-gray-800">
-                <th className="px-4 py-3 text-center text-emerald-400">차호</th>
-                <th className="px-4 py-3 text-center">차종</th>
-                <th className="px-4 py-3 text-center">연료</th>
-                <th className="px-4 py-3 text-center">엔진</th>
-                <th className="px-4 py-3 text-center">배기량</th>
-                <th className="px-4 py-3 text-center">주행거리</th>
-                <th className="px-4 py-3 text-center">최초등록일</th>
-                <th className="px-4 py-3 text-center">말소등록일</th>
-                <th className="px-4 py-3 text-center">기준연월</th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-gray-800 text-gray-300">
-              {historicalCars.map((row, idx) => (
-                <tr key={idx} className="hover:bg-gray-850/40 transition-colors">
-                  {row.isFirst && (
-                    <td rowSpan={row.rowSpan} className="px-4 py-3 bg-gray-950 font-black text-center text-sm border-r border-gray-800 text-emerald-400 align-middle">
-                      {row.carNum}호
-                    </td>
-                  )}
-                  <td className="px-4 py-3 font-semibold text-white">{row.model}</td>
-                  <td className="px-4 py-3 text-center text-gray-400">{row.fuel}</td>
-                  <td className="px-4 py-3 text-center font-mono text-gray-400">{row.engine}</td>
-                  <td className="px-4 py-3 text-center font-mono text-gray-400">{row.displacement}</td>
-                  <td className="px-4 py-3 text-center font-mono text-gray-400">{row.mileage}</td>
-                  <td className="px-4 py-3 text-center font-mono text-gray-500">{row.regDate}</td>
-                  <td className="px-4 py-3 text-center font-mono text-gray-500">
-                    <span className={row.cancelDate === '운행 중' ? 'text-emerald-500 font-bold' : 'text-red-400/70'}>
-                      {row.cancelDate}
-                    </span>
-                  </td>
-                  <td className="px-4 py-3 text-center font-mono text-gray-500">{row.date}</td>
+      {activeTab === 'records' && (
+        <div className="w-full">
+          <div className="mb-6">
+            <h2 className="text-lg font-black text-white">역대 차량현황</h2>
+            <p className="text-xs text-gray-500 mt-0.5">203번 버스로 산성마을과 온천장 사이를 이어온 차량들의 상세 제원입니다.</p>
+          </div>
+          <div className="w-full overflow-x-auto bg-gray-900 border border-gray-800 rounded-2xl shadow-xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+            <table className="w-full border-collapse border-hidden text-left text-xs min-w-max whitespace-nowrap">
+              <thead>
+                <tr className="bg-gray-950 text-gray-400 font-bold border-b border-gray-800">
+                  <th className="px-4 py-3 text-center text-emerald-400">차호</th>
+                  <th className="px-4 py-3 text-center">차종</th>
+                  <th className="px-4 py-3 text-center">연료</th>
+                  <th className="px-4 py-3 text-center">엔진</th>
+                  <th className="px-4 py-3 text-center">배기량</th>
+                  <th className="px-4 py-3 text-center">주행거리</th>
+                  <th className="px-4 py-3 text-center">최초등록일</th>
+                  <th className="px-4 py-3 text-center">말소등록일</th>
+                  <th className="px-4 py-3 text-center">기준연월</th>
                 </tr>
-              ))}
-            </tbody>
-          </table>
+              </thead>
+              <tbody className="divide-y divide-gray-800 text-gray-300">
+                {historicalCars.map((row, idx) => (
+                  <tr key={idx} className="hover:bg-gray-850/40 transition-colors">
+                    {row.isFirst && (
+                      <td rowSpan={row.rowSpan} className="px-4 py-3 bg-gray-950 font-black text-center text-sm border-r border-gray-800 text-emerald-400 align-middle">
+                        {row.carNum}호
+                      </td>
+                    )}
+                    <td className="px-4 py-3 font-semibold text-white">{row.model}</td>
+                    <td className="px-4 py-3 text-center text-gray-400">{row.fuel}</td>
+                    <td className="px-4 py-3 text-center font-mono text-gray-400">{row.engine}</td>
+                    <td className="px-4 py-3 text-center font-mono text-gray-400">{row.displacement}</td>
+                    <td className="px-4 py-3 text-center font-mono text-gray-400">{row.mileage}</td>
+                    <td className="px-4 py-3 text-center font-mono text-gray-500">{row.regDate}</td>
+                    <td className="px-4 py-3 text-center font-mono text-gray-500">
+                      <span className={row.cancelDate === '운행 중' ? 'text-emerald-500 font-bold' : 'text-red-400/70'}>
+                        {row.cancelDate}
+                      </span>
+                    </td>
+                    <td className="px-4 py-3 text-center font-mono text-gray-500">{row.date}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-    )}
+      )}
 
-    {activeTab === 'behind' && (
-      <div className="px-6 max-w-3xl mx-auto space-y-6">
-        <div>
-          <h2 className="text-lg font-black text-white">비하인드 스토리</h2>
-          <p className="text-xs text-gray-500 mt-0.5">공간 제약으로 노선도에 다 담지 못했던 깊은 이야기들입니다.</p>
-        </div>
-        <div className="space-y-4">
-          {behindStories.map((story, idx) => (
-            <div key={idx} className="bg-gray-900 border border-gray-800 rounded-2xl p-5 shadow-lg">
-              <h3 className="text-sm font-bold text-emerald-400 mb-2">{story.title}</h3>
-              <p className="text-xs text-gray-300 leading-relaxed font-sans">{story.content}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    )}
-
-    {activeTab === 'credits' && (
-      <div className="px-6 max-w-3xl mx-auto">
-        <div className="bg-gray-900 border border-emerald-500/20 rounded-2xl p-6 shadow-xl space-y-6">
+      {activeTab === 'behind' && (
+        <div className="w-full space-y-6">
           <div>
-            <h3 className="text-lg font-black text-white border-b border-gray-800 pb-2">크레딧</h3>
-            <p className="text-gray-400 text-xs mt-3 leading-relaxed font-sans">
-              본 웹사이트는 203번 좌석버스를 이용하려는 타지인들과 버스 동호인들을 위해 제작된 비공식 가이드입니다.
-            </p>
+            <h2 className="text-lg font-black text-white">비하인드 스토리</h2>
+            <p className="text-xs text-gray-500 mt-0.5">공간 제약으로 노선도에 다 담지 못했던 깊은 이야기들...</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
-            <div className="bg-gray-950 p-4 rounded-xl border border-gray-800">
-              <h4 className="text-emerald-400 font-bold mb-1.5">🛠️ 개발 및 디자인</h4>
-              <p className="text-gray-300 font-medium">Rung2ne</p>
-              <p className="text-gray-500 mt-0.5 font-mono text-[11px]">Next.js / Tailwind CSS / React</p>
-            </div>
-            <div className="bg-gray-950 p-4 rounded-xl border border-gray-800">
-              <h4 className="text-emerald-400 font-bold mb-1.5">📊 참고 자료 및 API 출처</h4>
-              <ul className="text-gray-300 space-y-1 list-disc list-inside font-sans">
-                <li>부산광역시 부산버스정보시스템 API</li>
-                <li>부산역사문화대전</li>
-                <li>나무위키</li>
-              </ul>
-            </div>
-          </div>
-          <div className="text-center text-[10px] text-gray-600 pt-2 border-t border-gray-800 font-mono">
-            ©2026 203 Guide Project. All Rights Reserved.
+          <div className="space-y-4">
+            {behindStories.map((story) => {
+              const isOpen = openStoryId === story.id;
+              return (
+                <div key={story.id} className="bg-gray-900 border border-gray-800 rounded-2xl shadow-xl overflow-hidden transition-all duration-300">
+                  <button 
+                    onClick={() => toggleStory(story.id)}
+                    className="w-full text-left p-5 flex justify-between items-center hover:bg-gray-850/40 transition-colors group"
+                  >
+                    <h3 className={`text-sm font-bold transition-colors duration-300 ${isOpen ? 'text-emerald-400' : 'text-gray-200 group-hover:text-emerald-400'}`}>
+                      {story.title}
+                    </h3>
+                    <span className={`text-[10px] text-gray-500 transform transition-transform duration-300 ${isOpen ? 'rotate-180 text-emerald-400' : ''}`}>
+                      ▼
+                    </span>
+                  </button>
+                  
+                  <div className={`grid transition-[grid-template-rows] duration-300 ease-in-out ${isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'}`}>
+                    <div className="overflow-hidden">
+                      <div className="p-5 pt-0 border-t border-gray-850/50 text-xs text-gray-300 leading-relaxed font-sans space-y-3.5">
+                        {story.content.map((paragraph, pIdx) => (
+                          <p key={pIdx}>{paragraph}</p>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
-      </div>
-    )}
+      )}
+
+      {activeTab === 'credits' && (
+        <div className="w-full">
+          <div className="bg-gray-900 border border-emerald-500/20 rounded-2xl p-6 shadow-xl space-y-6">
+            <div>
+              <h3 className="text-lg font-black text-white border-b border-gray-800 pb-2">크레딧</h3>
+              <p className="text-gray-400 text-xs mt-3 leading-relaxed font-sans">
+                본 웹사이트는 203번 좌석버스를 이용하려는 타지인들과 버스 동호인들을 위해 제작된 비공식 가이드입니다.
+              </p>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+              <div className="bg-gray-950 p-4 rounded-xl border border-gray-800">
+                <h4 className="text-emerald-400 font-bold mb-1.5">🛠️ 개발 및 디자인</h4>
+                <p className="text-gray-300 font-medium">Rung2ne</p>
+                <p className="text-gray-500 mt-0.5 font-mono text-[11px]">Next.js / Tailwind CSS / React</p>
+              </div>
+              <div className="bg-gray-950 p-4 rounded-xl border border-gray-800">
+                <h4 className="text-emerald-400 font-bold mb-1.5">📊 참고 자료 및 API 출처</h4>
+                <ul className="text-gray-300 space-y-1 list-disc list-inside font-sans">
+                  <li>부산광역시 부산버스정보시스템 API</li>
+                  <li>부산역사문화대전</li>
+                  <li>나무위키</li>
+                  <li>故 성산의 발자취 '부산 산악계의 영원한 큰형님, 그토록 사랑했던 금정산에 잠들다', 국제신문</li>
+                  <li>대통령의 맛집 ③ 박정희 전대통령이 뒤봐준 막걸리, 중앙일보</li>
+                </ul>
+              </div>
+            </div>
+            <div className="text-center text-[10px] text-gray-600 pt-2 border-t border-gray-800 font-mono">
+              ©2026 203 Guide Project. All Rights Reserved.
+            </div>
+          </div>
+        </div>
+      )}
 
       {selectedBus && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4" onClick={() => setSelectedBus(null)}>
@@ -407,9 +435,11 @@ export default function BusTracker() {
                   <tr className="border-b border-gray-900"><td className="px-4 py-3 bg-gray-900/50 font-bold text-gray-400 w-1/3">차종</td><td className="px-4 py-3 text-gray-200 font-medium">{selectedBus.details?.model || "정보 없음"}</td></tr>
                   <tr className="border-b border-gray-900"><td className="px-4 py-3 bg-gray-900/50 font-bold text-gray-400">연식</td><td className="px-4 py-3 text-gray-200">{selectedBus.details?.year ? `${selectedBus.details.year}년식` : "정보 없음"}</td></tr>
                   <tr className="border-b border-gray-900"><td className="px-4 py-3 bg-gray-900/50 font-bold text-gray-400">엔진</td><td className="px-4 py-3 text-gray-200 font-mono">{selectedBus.details?.engine || "정보 없음"}</td></tr>
-                  <tr className="border-b border-gray-900"><td className="px-4 py-3 bg-gray-900/50 font-bold text-gray-400">배기량</td><td className="px-4 py-3 text-gray-200">{selectedBus.details?.displacement || "정보 없음"}</td></tr><tr className="border-b border-gray-900">
+                  <tr className="border-b border-gray-900"><td className="px-4 py-3 bg-gray-900/50 font-bold text-gray-400">배기량</td><td className="px-4 py-3 text-gray-200">{selectedBus.details?.displacement || "정보 없음"}</td></tr>
+                  <tr className="border-b border-gray-900">
                     <td className="px-4 py-3 bg-gray-900/50 font-bold text-gray-400">주행거리</td>
-                    <td className="px-4 py-3 text-gray-200 font-mono">{selectedBus.details?.mileage || "정보 없음"}{selectedBus.details?.date && (<span className="text-[10px] text-gray-500 font-sans ml-1.5">(기준일: {selectedBus.details.date})</span>)}</td></tr>
+                    <td className="px-4 py-3 text-gray-200 font-mono">{selectedBus.details?.mileage || "정보 없음"}{selectedBus.details?.date && (<span className="text-[10px] text-gray-500 font-sans ml-1.5">(기준일: {selectedBus.details.date})</span>)}</td>
+                  </tr>
                   <tr className="border-b border-gray-900"><td className="px-4 py-3 bg-gray-900/50 font-bold text-gray-400">제작 연월일</td><td className="px-4 py-3 text-gray-200">{selectedBus.details?.manufacture || "정보 없음"}</td></tr>
                   <tr className="border-b border-gray-900"><td className="px-4 py-3 bg-gray-900/50 font-bold text-gray-400">최초 등록일</td><td className="px-4 py-3 text-gray-200">{selectedBus.details?.registration || "정보 없음"}</td></tr>
                   <tr><td className="px-4 py-3 bg-gray-900/50 font-bold text-gray-400">승차 인원</td><td className="px-4 py-3 text-gray-200">{selectedBus.details?.capacity || "정보 없음"}</td></tr>
@@ -442,6 +472,7 @@ export default function BusTracker() {
           </div>
         </div>
       )}
+
       {isTimetableOpen && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4" onClick={() => setIsTimetableOpen(false)}>
           <div className="bg-gray-900 border border-emerald-500/30 rounded-2xl max-w-md w-full p-6 shadow-2xl relative" onClick={(e) => e.stopPropagation()}>
@@ -449,49 +480,66 @@ export default function BusTracker() {
             
             <header className="mb-4">
               <span className="bg-emerald-600 text-white font-extrabold text-[10px] px-2 py-0.5 rounded-full">TIMETABLE</span>
-              <h3 className="text-2xl font-black text-white mt-1">🚌 운행 시간표</h3>
+              <h3 className="text-2xl font-black text-white mt-1">🚌 203 운행 시간표 (평일 기준)</h3>
             </header>
 
             <div className="space-y-4 text-xs font-sans">
               <p className="text-gray-400 leading-relaxed">
-                ※ 도로 상황 및 회사 사정에 따라 실제 운행 시간이 다소 변동될 수 있습니다.
+                ※ 도로 상황, 승객 수, 주유, 우천 등에 따라 운행 시간이 변경될 수 있음.
               </p>
               <div className="bg-gray-950 border border-gray-800 rounded-xl overflow-hidden">
                 <table className="w-full border-collapse text-center text-gray-300">
                   <thead>
                     <tr className="bg-gray-900 text-emerald-400 font-bold border-b border-gray-800 text-[11px]">
-                      <th className="p-2 border-r border-gray-800">구분</th>
-                      <th className="p-2 border-r border-gray-800">평일</th>
-                      <th className="p-2">토·일·공휴일</th>
+                      <th className="p-2 border-r border-gray-800">기점</th>
+                      <th className="p-2 border-r border-gray-800">첫차 출발</th>
+                      <th className="p-2">막차 출발</th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-800">
                     <tr className="hover:bg-gray-900/30">
-                      <td className="p-2.5 font-bold bg-gray-900/50 border-r border-gray-800 text-white">첫차</td>
-                      <td className="p-2.5 border-r border-gray-800 font-mono">06:00</td>
-                      <td className="p-2.5 font-mono">06:15</td>
+                      <td className="p-2.5 font-bold bg-gray-900/50 border-r border-gray-800 text-white">산성 마을</td>
+                      <td className="p-2.5 border-r border-gray-800 font-mono text-emerald-400 font-semibold">06:00</td>
+                      <td className="p-2.5 font-mono text-red-400 font-semibold">22:00</td>
                     </tr>
                     <tr className="hover:bg-gray-900/30">
-                      <td className="p-2.5 font-bold bg-gray-900/50 border-r border-gray-800 text-white">막차</td>
-                      <td className="p-2.5 border-r border-gray-800 font-mono">22:30</td>
-                      <td className="p-2.5 font-mono">22:10</td>
-                    </tr>
-                    <tr className="hover:bg-gray-900/30">
-                      <td className="p-2.5 font-bold bg-gray-900/50 border-r border-gray-800 text-white">배차 간격</td>
-                      <td className="p-2.5 border-r border-gray-800">10 ~ 15분</td>
-                      <td className="p-2.5">15 ~ 20분</td>
+                      <td className="p-2.5 font-bold bg-gray-900/50 border-r border-gray-800 text-white">온천장역</td>
+                      <td className="p-2.5 border-r border-gray-800 font-mono text-emerald-400 font-semibold">06:30</td>
+                      <td className="p-2.5 font-mono text-red-400 font-semibold">22:35</td>
                     </tr>
                   </tbody>
                 </table>
               </div>
-              <div className="text-[11px] text-gray-500 bg-gray-950 p-3 rounded-xl border border-gray-850">
-                ℹ️ 출퇴근 시간대(07:30~09:00, 17:30~19:00)에는 유동적으로 집중 배차됩니다.
+
+              <div className="bg-gray-950 border border-gray-800 rounded-xl p-3.5 space-y-2.5 text-gray-300">
+                <h4 className="font-bold text-yellow-400 text-[11px] flex items-center gap-1">
+                  ⏱️ 평일 정시 출발 시간 (매시)
+                </h4>
+                <div className="grid grid-cols-2 gap-2 text-[11px]">
+                  <div className="bg-gray-900 p-2 rounded-lg border border-gray-800">
+                    <span className="text-gray-400 block mb-0.5">주간 (07:00 ~ 18:00)</span>
+                    <span className="font-mono text-white font-bold">15분 간격</span>
+                    <span className="text-gray-500 block text-[10px] mt-0.5">(00분 / 15분 / 30분 / 45분)</span>
+                  </div>
+                  <div className="bg-gray-900 p-2 rounded-lg border border-gray-800">
+                    <span className="text-gray-400 block mb-0.5">야간 (18:00 이후)</span>
+                    <span className="font-mono text-white font-bold">20분 간격</span>
+                    <span className="text-gray-500 block text-[10px] mt-0.5">(00분 / 20분 / 40분)</span>
+                  </div>
+                </div>
+                <p className="text-[10px] text-gray-500 pt-1">
+                  * 평일 09:00 ~ 22:00 비수기 기간에는 야간과 동일하게 20분 간격으로 운행될 수 있습니다.
+                </p>
+              </div>
+
+              <div className="text-[11px] text-gray-400 bg-emerald-950/20 p-3 rounded-xl border border-emerald-900/30 leading-relaxed">
+                <span className="font-bold text-emerald-400 block mb-0.5">📅 토·일·공휴일 운행 기준</span>
+                정상 수요 시간대에는 <span className="text-white font-semibold">8~15분 간격</span>으로 단축 배차되며, 17시 이후로는 <span className="text-white font-semibold">15~20분 간격</span>으로 운행됩니다. (18시 이후 전 노선 평일 20분 배차 통일)
               </div>
             </div>
           </div>
         </div>
       )}
-
     </main>
   );
 }
