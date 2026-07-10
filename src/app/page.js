@@ -104,7 +104,6 @@ export default function BusTracker() {
                 <div className="text-left pl-4">상행 (산성마을 방면) ↑</div>
               </div>
 
-          <div className="w-full overflow-x-auto pb-4 scrollbar-hide">
             {PAIRED_ROWS.map((row, rIdx) => {
               const leftBuses = row.left ? buses.filter(bus => bus.bstopidx === row.left.idx) : [];
               const rightBuses = row.right ? buses.filter(bus => bus.bstopidx === row.right.idx) : [];
@@ -233,6 +232,7 @@ export default function BusTracker() {
                 </div>
               );
             })}
+            </div>
           </div>
         </div>
       )}
