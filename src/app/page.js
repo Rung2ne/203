@@ -98,7 +98,7 @@ export default function BusTracker() {
           
           <div className="w-full overflow-x-auto pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
             <div className="min-w-[760px] px-6 md:mx-auto flex flex-col">
-              <div className="grid grid-cols-[130px_160px_40px_60px_40px_160px_130px] text-center mb-4 text-xs font-bold text-gray-500 tracking-wider">
+              <div className="grid grid-cols-[145px_145px_40px_60px_40px_145px_145px] text-center mb-4 text-xs font-bold text-gray-500 tracking-wider">
                 <div className="text-right pr-4">하행 (온천장 방면) ↓</div>
                 <div></div><div></div><div></div><div></div><div></div>
                 <div className="text-left pl-4">상행 (산성마을 방면) ↑</div>
@@ -109,7 +109,7 @@ export default function BusTracker() {
               const rightBuses = row.right ? buses.filter(bus => bus.bstopidx === row.right.idx) : [];
 
               return (
-                <div key={rIdx} className={`grid grid-cols-[130px_140px_40px_60px_40px_140px_130px] items-center relative ${row.isLoopBottom ? 'h-44' : 'h-16'}`}>
+                <div key={rIdx} className={`grid grid-cols-[145px_145px_40px_60px_40px_145px_145px] items-center relative ${row.isLoopBottom ? 'h-44' : 'h-16'}`}>
                   
                   <div className="flex flex-col items-end justify-center pr-3 gap-1">
                     {!row.isLoopBottom && leftBuses.map((bus, bIdx) => {
