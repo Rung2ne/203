@@ -47,6 +47,10 @@ export default function BusTracker() {
   const [openStoryId, setOpenStoryId] = useState(null);
 
   const historicalCars = [
+    { carNum: "2964", model: "'09 대우 BS090 로얄미디 F/L", fuel: "NGV", engine: "GE08TI", displacement: "8.0L", mileage: "573,736km(추정)", date: "2018-03", regDate: "2009/03/19", cancelDate: "2018/03/30", isFirst: true, rowSpan: 3 },
+    { carNum: "2964", model: "'13 대우 NEW BS090", fuel: "디젤", engine: "DL06K", displacement: "5.9L", mileage: "479,499km", date: "2023-05", regDate: "2013/02/01", cancelDate: "2023/05/03", isFirst: false },
+    { carNum: "2964", model: "'17 대우 NEW BS090", fuel: "디젤", engine: "DL06P", displacement: "5.9L", mileage: "520,976km", date: "2026-06", regDate: "2017/08/04", cancelDate: "운행 중", isFirst: false },
+
     { carNum: "2965", model: "'09 대우 BS090 로얄미디 F/L", fuel: "NGV", engine: "GE08TI", displacement: "8.0L", mileage: "585,419km(추정)", date: "2018-03", regDate: "2009/03/19", cancelDate: "2018/03/30", isFirst: true, rowSpan: 4 },
     { carNum: "2965", model: "'13 대우 NEW BS090", fuel: "디젤", engine: "DL06K", displacement: "5.9L", mileage: "365,000km(추정)", date: "2022-07", regDate: "2013/02/01", cancelDate: "2022/07/22", isFirst: false },
     { carNum: "2965", model: "'15 대우 NEW BS090", fuel: "디젤", engine: "ISB6.7E6", displacement: "6.7L", mileage: "609,338km", date: "2026-06", regDate: "2015/11/25", cancelDate: "2026/06/18", isFirst: false },
@@ -55,6 +59,9 @@ export default function BusTracker() {
     { carNum: "2966", model: "'09 대우 BS090 로얄미디 F/L", fuel: "NGV", engine: "GE08TI", displacement: "8.0L", mileage: "541,989km(추정)", date: "2018-03", regDate: "2009/03/19", cancelDate: "2018/03/27", isFirst: true, rowSpan: 3 },
     { carNum: "2966", model: "'16 대우 NEW BS090", fuel: "디젤", engine: "ISB6.7E6", displacement: "6.7L", mileage: "491,374km", date: "2026-04", regDate: "2016/03/29", cancelDate: "2026/04/22", isFirst: false },
     { carNum: "2966", model: "'20 NSAC 저상 2차 F/L", fuel: "CNG", engine: "C6AF", displacement: "11.6L", mileage: "345,669km", date: "2026-07", regDate: "2020/05/15", cancelDate: "운행 중", isFirst: false },
+
+    { carNum: "2967", model: "'09 대우 BS090 로얄미디 F/L", fuel: "NGV", engine: "GE08TI", displacement: "8.0L", mileage: "534,271km(추정)", date: "2018-03", regDate: "2009/03/19", cancelDate: "2018/03/28", isFirst: true, rowSpan: 2 },
+    { carNum: "2967", model: "'16 대우 NEW BS090", fuel: "디젤", engine: "ISB6.7E6", displacement: "6.7L", mileage: "401,318km", date: "2026-03", regDate: "2016/03/29", cancelDate: "2026/04/22", isFirst: false }
   ];
 
   const toggleStory = (id) => {
