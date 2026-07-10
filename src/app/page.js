@@ -85,7 +85,7 @@ export default function BusTracker() {
   };
 
   return (
-    <main className="max-w-5xl mx-auto min-h-screen bg-gray-950 text-gray-100 py-10 px-4 font-sans select-none">
+    <main className="max-w-5xl mx-auto min-h-screen bg-gray-950 text-gray-100 py-10 px-4 font-custom select-none">
       <header className="mb-10 text-center border-b border-gray-900 pb-5">
         <h1 className="text-3xl font-black text-yellow-400 tracking-widest font-mono">203 운행 현황</h1>
         <p className="text-xs text-gray-500 mt-2 tracking-wide">💡 정류장 이름을 클릭하면 주변 볼거리와 유래를 볼 수 있습니다.</p>
