@@ -41,6 +41,24 @@ export default function BusTracker() {
   const [loading, setLoading] = useState(true);
   const [selectedBus, setSelectedBus] = useState(null); 
   const [selectedStop, setSelectedStop] = useState(null);
+  const [activeTab, setActiveTab] = useState('main');
+  const [isTimetableOpen, setIsTimetableOpen] = useState(false);
+
+  const historicalCars = [
+    { carNum: "2965", model: "'09 대우 BS090 로얄미디 F/L", fuel: "NGV", engine: "GE08TI", displacement: "8.0L", mileage: "585,419km(추정)", date: "2018-03", regDate: "2009/03/19", cancelDate: "2018/03/30", isFirst: true, rowSpan: 4 },
+    { carNum: "2965", model: "'13 대우 NEW BS090", fuel: "디젤", engine: "DL06K", displacement: "5.9L", mileage: "365,000km(추정)", date: "2022-07", regDate: "2013/02/01", cancelDate: "2022/07/22", isFirst: false },
+    { carNum: "2965", model: "'15 대우 NEW BS090", fuel: "디젤", engine: "ISB6.7E6", displacement: "6.7L", mileage: "609,338km", date: "2026-06", regDate: "2015/11/25", cancelDate: "2026/06/18", isFirst: false },
+    { carNum: "2965", model: "'20 현대 그린시티 F/L", fuel: "CNG", engine: "C6GB", displacement: "6.8L", mileage: "348,000km", date: "2026-06", regDate: "2020/09/25", cancelDate: "운행 중", isFirst: false },
+    
+    { carNum: "2966", model: "'09 대우 BS090 로얄미디 F/L", fuel: "NGV", engine: "GE08TI", displacement: "8.0L", mileage: "541,989km(추정)", date: "2018-03", regDate: "2009/03/19", cancelDate: "2018/03/27", isFirst: true, rowSpan: 3 },
+    { carNum: "2966", model: "'16 대우 NEW BS090", fuel: "디젤", engine: "ISB6.7E6", displacement: "6.7L", mileage: "491,374km", date: "2026-04", regDate: "2016/03/29", cancelDate: "2026/04/22", isFirst: false },
+    { carNum: "2966", model: "'20 NSAC 저상 2차 F/L", fuel: "CNG", engine: "C6AF", displacement: "11.6L", mileage: "345,669km", date: "2026-07", regDate: "2020/05/15", cancelDate: "운행 중", isFirst: false },
+  ];
+
+  const behindStories = [
+    { title: "🏔️ 성산과 대륙산악회", content: "t" },
+    { title: "🍾 산성막걸리", content: "t" }
+  ];
 
   const fetchBusData = async () => {
     try {
@@ -86,10 +104,45 @@ export default function BusTracker() {
 
   return (
     <main className="max-w-5xl mx-auto min-h-screen bg-gray-950 text-gray-100 py-10 font-custom select-none">
-      <header className="mb-10 text-center border-b border-gray-900 pb-5">
-        <h1 className="text-3xl font-black text-yellow-400 tracking-widest font-mono">203 운행 현황</h1>
-        <p className="text-xs text-gray-500 mt-2 tracking-wide">💡 정류장 이름을 클릭하면 주변 볼거리와 유래를 볼 수 있습니다.</p>
-      </header>
+      <div className="border-b border-gray-800 bg-gray-900/50 sticky top-0 backdrop-blur-md z-40 mb-8 px-6 py-4 flex flex-col sm:flex-row justify-between items-center gap-4 rounded-2xl mx-4">
+        <div className="flex items-center gap-2">
+          <span className="text-xl font-black text-emerald-400 tracking-wider cursor-pointer" onClick={() => setActiveTab('main')}>
+            203번 가이드
+          </span>
+          <span className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded-md font-mono">v1.3.7</span>
+        </div>
+
+      <div className="flex gap-1 bg-gray-950 p-1 rounded-xl border border-gray-800 text-xs font-bold">
+        <button onClick={() => setActiveTab('main')} className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'main' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>노선도</button>
+        <button onClick={() => setActiveTab('records')} className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'records' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>역대 차량현황</button>
+        <button onClick={() => setActiveTab('behind')} className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'behind' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>비하인드 스토리</button>
+        <button onClick={() => setActiveTab('credits')} className={`px-4 py-2 rounded-lg transition-all ${activeTab === 'credits' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>크레딧</button>
+      </div>
+    </div>
+
+    {activeTab === 'main' && (
+      <>
+        <header className="mb-6 px-4 flex flex-col sm:flex-row justify-between items-center border-b border-gray-900 pb-5 gap-4">
+          <div className="text-center sm:text-left">
+            <h1 className="text-3xl font-black text-yellow-400 tracking-widest font-mono">203번 운행 현황</h1>
+            <p className="text-xs text-gray-500 mt-2 tracking-wide">💡 정류장 이름을 클릭하면 추천하는 주변에서 할 일과 정류장 이름의 유래를 볼 수 있어요!</p>
+          </div>
+          <div className="flex gap-2">
+            <button 
+              onClick={fetchBusData} 
+              disabled={loading}
+              className="bg-gray-900 border border-emerald-500/30 hover:bg-emerald-950/40 text-emerald-400 text-xs font-bold px-3 py-2 rounded-xl transition-all shadow-md flex items-center gap-1 disabled:opacity-50"
+            >
+              {loading ? '🔄 갱신 중...' : '🔄 새로고침'}
+            </button>
+            <button 
+              onClick={() => setIsTimetableOpen(true)}
+              className="bg-gray-900 border border-emerald-500/30 hover:bg-emerald-950/40 text-emerald-400 text-xs font-bold px-3 py-2 rounded-xl transition-all shadow-md flex items-center gap-1"
+            >
+              📅 운행 시간표
+            </button>
+          </div>
+        </header>
 
       {loading ? (
         <div className="text-center text-gray-600 animate-pulse text-sm">시스템 로딩 중...</div>
@@ -235,7 +288,106 @@ export default function BusTracker() {
             </div>
           </div>
         </div>
+        )}
+        </>
       )}
+
+    {activeTab === 'records' && (
+      <div className="px-4 max-w-5xl mx-auto">
+        <div className="mb-6">
+          <h2 className="text-lg font-black text-white">역대 차량현황</h2>
+          <p className="text-xs text-gray-500 mt-0.5">203번 버스로 산성마을과 온천장 사이를 이어온 차량들의 상세 제원입니다.</p>
+        </div>
+        <div className="w-full overflow-x-auto bg-gray-900 border border-gray-800 rounded-2xl shadow-xl [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <table className="w-full border-collapse border-hidden text-left text-xs min-w-max whitespace-nowrap">
+            <thead>
+              <tr className="bg-gray-950 text-gray-400 font-bold border-b border-gray-800">
+                <th className="px-4 py-3 text-center text-emerald-400">차호</th>
+                <th className="px-4 py-3 text-center">차종</th>
+                <th className="px-4 py-3 text-center">연료</th>
+                <th className="px-4 py-3 text-center">엔진</th>
+                <th className="px-4 py-3 text-center">배기량</th>
+                <th className="px-4 py-3 text-center">주행거리</th>
+                <th className="px-4 py-3 text-center">최초등록일</th>
+                <th className="px-4 py-3 text-center">말소등록일</th>
+                <th className="px-4 py-3 text-center">기준연월</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-gray-800 text-gray-300">
+              {historicalCars.map((row, idx) => (
+                <tr key={idx} className="hover:bg-gray-850/40 transition-colors">
+                  {row.isFirst && (
+                    <td rowSpan={row.rowSpan} className="px-4 py-3 bg-gray-950 font-black text-center text-sm border-r border-gray-800 text-emerald-400 align-middle">
+                      {row.carNum}호
+                    </td>
+                  )}
+                  <td className="px-4 py-3 font-semibold text-white">{row.model}</td>
+                  <td className="px-4 py-3 text-center text-gray-400">{row.fuel}</td>
+                  <td className="px-4 py-3 text-center font-mono text-gray-400">{row.engine}</td>
+                  <td className="px-4 py-3 text-center font-mono text-gray-400">{row.displacement}</td>
+                  <td className="px-4 py-3 text-center font-mono text-gray-400">{row.mileage}</td>
+                  <td className="px-4 py-3 text-center font-mono text-gray-500">{row.regDate}</td>
+                  <td className="px-4 py-3 text-center font-mono text-gray-500">
+                    <span className={row.cancelDate === '운행 중' ? 'text-emerald-500 font-bold' : 'text-red-400/70'}>
+                      {row.cancelDate}
+                    </span>
+                  </td>
+                  <td className="px-4 py-3 text-center font-mono text-gray-500">{row.date}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    )}
+
+    {activeTab === 'behind' && (
+      <div className="px-6 max-w-3xl mx-auto space-y-6">
+        <div>
+          <h2 className="text-lg font-black text-white">비하인드 스토리</h2>
+          <p className="text-xs text-gray-500 mt-0.5">공간 제약으로 노선도에 다 담지 못했던 깊은 이야기들입니다.</p>
+        </div>
+        <div className="space-y-4">
+          {behindStories.map((story, idx) => (
+            <div key={idx} className="bg-gray-900 border border-gray-800 rounded-2xl p-5 shadow-lg">
+              <h3 className="text-sm font-bold text-emerald-400 mb-2">{story.title}</h3>
+              <p className="text-xs text-gray-300 leading-relaxed font-sans">{story.content}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    )}
+
+    {activeTab === 'credits' && (
+      <div className="px-6 max-w-3xl mx-auto">
+        <div className="bg-gray-900 border border-emerald-500/20 rounded-2xl p-6 shadow-xl space-y-6">
+          <div>
+            <h3 className="text-lg font-black text-white border-b border-gray-800 pb-2">크레딧</h3>
+            <p className="text-gray-400 text-xs mt-3 leading-relaxed font-sans">
+              본 웹사이트는 203번 좌석버스를 이용하려는 타지인들과 버스 동호인들을 위해 제작된 비공식 가이드입니다.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+            <div className="bg-gray-950 p-4 rounded-xl border border-gray-800">
+              <h4 className="text-emerald-400 font-bold mb-1.5">🛠️ 개발 및 디자인</h4>
+              <p className="text-gray-300 font-medium">Rung2ne</p>
+              <p className="text-gray-500 mt-0.5 font-mono text-[11px]">Next.js / Tailwind CSS / React</p>
+            </div>
+            <div className="bg-gray-950 p-4 rounded-xl border border-gray-800">
+              <h4 className="text-emerald-400 font-bold mb-1.5">📊 참고 자료 및 API 출처</h4>
+              <ul className="text-gray-300 space-y-1 list-disc list-inside font-sans">
+                <li>부산광역시 부산버스정보시스템 API</li>
+                <li>부산역사문화대전</li>
+                <li>나무위키</li>
+              </ul>
+            </div>
+          </div>
+          <div className="text-center text-[10px] text-gray-600 pt-2 border-t border-gray-800 font-mono">
+            ©2026 203 Guide Project. All Rights Reserved.
+          </div>
+        </div>
+      </div>
+    )}
 
       {selectedBus && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4" onClick={() => setSelectedBus(null)}>
@@ -255,8 +407,9 @@ export default function BusTracker() {
                   <tr className="border-b border-gray-900"><td className="px-4 py-3 bg-gray-900/50 font-bold text-gray-400 w-1/3">차종</td><td className="px-4 py-3 text-gray-200 font-medium">{selectedBus.details?.model || "정보 없음"}</td></tr>
                   <tr className="border-b border-gray-900"><td className="px-4 py-3 bg-gray-900/50 font-bold text-gray-400">연식</td><td className="px-4 py-3 text-gray-200">{selectedBus.details?.year ? `${selectedBus.details.year}년식` : "정보 없음"}</td></tr>
                   <tr className="border-b border-gray-900"><td className="px-4 py-3 bg-gray-900/50 font-bold text-gray-400">엔진</td><td className="px-4 py-3 text-gray-200 font-mono">{selectedBus.details?.engine || "정보 없음"}</td></tr>
-                  <tr className="border-b border-gray-900"><td className="px-4 py-3 bg-gray-900/50 font-bold text-gray-400">배기량</td><td className="px-4 py-3 text-gray-200">{selectedBus.details?.displacement || "정보 없음"}</td></tr>
-                  <tr className="border-b border-gray-900"><td className="px-4 py-3 bg-gray-900/50 font-bold text-gray-400">변속기</td><td className="px-4 py-3 text-gray-200 font-mono">{selectedBus.details?.transmission || "정보 없음"}</td></tr>
+                  <tr className="border-b border-gray-900"><td className="px-4 py-3 bg-gray-900/50 font-bold text-gray-400">배기량</td><td className="px-4 py-3 text-gray-200">{selectedBus.details?.displacement || "정보 없음"}</td></tr><tr className="border-b border-gray-900">
+                    <td className="px-4 py-3 bg-gray-900/50 font-bold text-gray-400">주행거리</td>
+                    <td className="px-4 py-3 text-gray-200 font-mono">{selectedBus.details?.mileage || "정보 없음"}{selectedBus.details?.date && (<span className="text-[10px] text-gray-500 font-sans ml-1.5">(기준일: {selectedBus.details.date})</span>)}</td></tr>
                   <tr className="border-b border-gray-900"><td className="px-4 py-3 bg-gray-900/50 font-bold text-gray-400">제작 연월일</td><td className="px-4 py-3 text-gray-200">{selectedBus.details?.manufacture || "정보 없음"}</td></tr>
                   <tr className="border-b border-gray-900"><td className="px-4 py-3 bg-gray-900/50 font-bold text-gray-400">최초 등록일</td><td className="px-4 py-3 text-gray-200">{selectedBus.details?.registration || "정보 없음"}</td></tr>
                   <tr><td className="px-4 py-3 bg-gray-900/50 font-bold text-gray-400">승차 인원</td><td className="px-4 py-3 text-gray-200">{selectedBus.details?.capacity || "정보 없음"}</td></tr>
@@ -278,17 +431,67 @@ export default function BusTracker() {
             </header>
             <div className="space-y-3 text-xs leading-relaxed">
               <div className="bg-gray-950 p-4 rounded-xl border border-gray-800">
-                <h4 className="text-emerald-400 font-bold mb-1.5">📋 정류장 이름의 유래</h4>
+                <h4 className="text-emerald-400 font-bold mb-1.5">📋 정류장 이름과 관련하여......</h4>
                 <p className="text-gray-300">{selectedStop.origin}</p>
               </div>
               <div className="bg-gray-950 p-4 rounded-xl border border-gray-800">
-                <h4 className="text-yellow-400 font-bold mb-1.5">📍 주변 추천 볼거리 / 먹거리</h4>
+                <h4 className="text-yellow-400 font-bold mb-1.5">📍 추천하는 주변에서 할 일</h4>
                 <p className="text-gray-300">{selectedStop.spots}</p>
               </div>
             </div>
           </div>
         </div>
       )}
+      {isTimetableOpen && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-50 flex items-center justify-center p-4" onClick={() => setIsTimetableOpen(false)}>
+          <div className="bg-gray-900 border border-emerald-500/30 rounded-2xl max-w-md w-full p-6 shadow-2xl relative" onClick={(e) => e.stopPropagation()}>
+            <button className="absolute top-4 right-5 text-gray-400 hover:text-white text-xl font-mono" onClick={() => setIsTimetableOpen(false)}>✕</button>
+            
+            <header className="mb-4">
+              <span className="bg-emerald-600 text-white font-extrabold text-[10px] px-2 py-0.5 rounded-full">TIMETABLE</span>
+              <h3 className="text-2xl font-black text-white mt-1">🚌 운행 시간표</h3>
+            </header>
+
+            <div className="space-y-4 text-xs font-sans">
+              <p className="text-gray-400 leading-relaxed">
+                ※ 도로 상황 및 회사 사정에 따라 실제 운행 시간이 다소 변동될 수 있습니다.
+              </p>
+              <div className="bg-gray-950 border border-gray-800 rounded-xl overflow-hidden">
+                <table className="w-full border-collapse text-center text-gray-300">
+                  <thead>
+                    <tr className="bg-gray-900 text-emerald-400 font-bold border-b border-gray-800 text-[11px]">
+                      <th className="p-2 border-r border-gray-800">구분</th>
+                      <th className="p-2 border-r border-gray-800">평일</th>
+                      <th className="p-2">토·일·공휴일</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-gray-800">
+                    <tr className="hover:bg-gray-900/30">
+                      <td className="p-2.5 font-bold bg-gray-900/50 border-r border-gray-800 text-white">첫차</td>
+                      <td className="p-2.5 border-r border-gray-800 font-mono">06:00</td>
+                      <td className="p-2.5 font-mono">06:15</td>
+                    </tr>
+                    <tr className="hover:bg-gray-900/30">
+                      <td className="p-2.5 font-bold bg-gray-900/50 border-r border-gray-800 text-white">막차</td>
+                      <td className="p-2.5 border-r border-gray-800 font-mono">22:30</td>
+                      <td className="p-2.5 font-mono">22:10</td>
+                    </tr>
+                    <tr className="hover:bg-gray-900/30">
+                      <td className="p-2.5 font-bold bg-gray-900/50 border-r border-gray-800 text-white">배차 간격</td>
+                      <td className="p-2.5 border-r border-gray-800">10 ~ 15분</td>
+                      <td className="p-2.5">15 ~ 20분</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <div className="text-[11px] text-gray-500 bg-gray-950 p-3 rounded-xl border border-gray-850">
+                ℹ️ 출퇴근 시간대(07:30~09:00, 17:30~19:00)에는 유동적으로 집중 배차됩니다.
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
     </main>
   );
 }

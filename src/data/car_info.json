@@ -11,7 +11,7 @@
         "mileage": "km",
         "manufacture": "2017/10/16",
         "registration": "2017/10/23",
-        "data_updated_at": ""
+        "date": ""
     },
     "71자2962" : {
         "model": "대우 NEW BS090",
@@ -25,7 +25,7 @@
         "mileage": "km",
         "manufacture": "2017/10/24",
         "registration": "2017/10/30",
-        "data_updated_at": ""
+        "date": ""
     },
     "71자2963" : {
         "model": "대우 NEW BS090",
@@ -39,7 +39,7 @@
         "mileage": "km",
         "manufacture": "2017/10/19",
         "registration": "2017/10/30",
-        "data_updated_at": ""
+        "date": ""
     },
     "71자2964" : {
         "model": "대우 NEW BS090",
@@ -53,7 +53,7 @@
         "mileage": "km",
         "manufacture": "2017/07/28",
         "registration": "2017/08/04",
-        "data_updated_at": ""
+        "date": ""
     },
     "71자2965" : {
         "model": "현대 그린시티 F/L",
@@ -67,7 +67,7 @@
         "mileage": "348,000km",
         "manufacture": "2020/09/18",
         "registration": "2020/09/25",
-        "data_updated_at": "2026/06/04"
+        "date": "2026/06/04"
     },
     "71자2966" : {
         "model": "현대 NSAC 저상 2차 F/L",
@@ -81,7 +81,7 @@
         "mileage": "345,669km",
         "manufacture": "2020/04/23",
         "registration": "2020/05/15",
-        "data_updated_at": "2026/06/02"
+        "date": "2026/06/02"
     },
     "71자2967" : {
         "model": "대우 NEW BS090",
@@ -95,6 +95,6 @@
         "mileage": "401,318km",
         "manufacture": "2016/03/18",
         "registration": "2016/03/29",
-        "data_updated_at": "2026/03/29"
+        "date": "2026/03/29"
     }
 }
