@@ -85,7 +85,7 @@ export default function BusTracker() {
   };
 
   return (
-    <main className="max-w-5xl mx-auto min-h-screen bg-gray-950 text-gray-100 py-10 px-4 font-custom select-none">
+    <main className="max-w-5xl mx-auto min-h-screen bg-gray-950 text-gray-100 py-10 font-custom select-none">
       <header className="mb-10 text-center border-b border-gray-900 pb-5">
         <h1 className="text-3xl font-black text-yellow-400 tracking-widest font-mono">203 운행 현황</h1>
         <p className="text-xs text-gray-500 mt-2 tracking-wide">💡 정류장 이름을 클릭하면 주변 볼거리와 유래를 볼 수 있습니다.</p>
@@ -96,11 +96,13 @@ export default function BusTracker() {
       ) : (
         <div className="flex flex-col items-center">
           
-          <div className="w-max grid grid-cols-[130px_140px_40px_60px_40px_140px_130px] text-center mb-4 text-xs font-bold text-gray-500 tracking-wider mx-auto">
-            <div className="text-right pr-4">하행 (온천장 방면) ↓</div>
-            <div></div><div></div><div></div><div></div><div></div>
-            <div className="text-left pl-4">상행 (산성마을 방면) ↑</div>
-          </div>
+          <div className="w-full overflow-x-auto pb-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            <div className="min-w-[760px] px-6 md:mx-auto flex flex-col">
+              <div className="grid grid-cols-[130px_160px_40px_60px_40px_160px_130px] text-center mb-4 text-xs font-bold text-gray-500 tracking-wider">
+                <div className="text-right pr-4">하행 (온천장 방면) ↓</div>
+                <div></div><div></div><div></div><div></div><div></div>
+                <div className="text-left pl-4">상행 (산성마을 방면) ↑</div>
+              </div>
 
           <div className="w-full overflow-x-auto pb-4 scrollbar-hide">
             {PAIRED_ROWS.map((row, rIdx) => {
@@ -108,7 +110,7 @@ export default function BusTracker() {
               const rightBuses = row.right ? buses.filter(bus => bus.bstopidx === row.right.idx) : [];
 
               return (
-                <div key={rIdx} className={`grid grid-cols-[130px_140px_40px_60px_40px_140px_130px] items-center relative mx-auto ${row.isLoopBottom ? 'h-44' : 'h-16'}`}>
+                <div key={rIdx} className={`grid grid-cols-[130px_140px_40px_60px_40px_140px_130px] items-center relative ${row.isLoopBottom ? 'h-44' : 'h-16'}`}>
                   
                   <div className="flex flex-col items-end justify-center pr-3 gap-1">
                     {!row.isLoopBottom && leftBuses.map((bus, bIdx) => {
@@ -131,7 +133,7 @@ export default function BusTracker() {
 
                   <div 
                     onClick={() => handleStopClick(row.left)}
-                    className={`text-right pr-4 text-xs font-semibold tracking-tight cursor-pointer hover:text-white transition-colors group ${leftBuses.length > 0 ? 'text-blue-400 font-bold' : 'text-gray-400'}`}
+                    className={`text-right pr-4 text-xs font-semibold tracking-tight cursor-pointer hover:text-white transition-colors group whitespace-nowrap ${leftBuses.length > 0 ? 'text-blue-400 font-bold' : 'text-gray-400'}`}
                   >
                     {!row.isLoopBottom && row.left ? (
                       <>
@@ -199,7 +201,7 @@ export default function BusTracker() {
 
                   <div 
                     onClick={() => handleStopClick(row.right)}
-                    className={`text-left pl-4 text-xs font-semibold tracking-tight cursor-pointer hover:text-white transition-colors group ${rightBuses.length > 0 ? 'text-green-400 font-bold' : 'text-gray-400'}`}
+                    className={`text-left pl-4 text-xs font-semibold tracking-tight cursor-pointer hover:text-white transition-colors group whitespace-nowrap ${rightBuses.length > 0 ? 'text-green-400 font-bold' : 'text-gray-400'}`}
                   >
                     {row.right ? (
                       <>
