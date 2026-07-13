@@ -47,17 +47,6 @@ export default function BusTracker() {
   const [isTimetableOpen, setIsTimetableOpen] = useState(false);
   const [openStoryId, setOpenStoryId] = useState(null);
 
-  const historicalCars = [
-    { carNum: "2965", model: "'09 대우 BS090 로얄미디 F/L", fuel: "NGV", engine: "GE08TI", displacement: "8.0L", mileage: "585,419km(추정)", date: "2018-03", regDate: "2009/03/19", cancelDate: "2018/03/30", isFirst: true, rowSpan: 4 },
-    { carNum: "2965", model: "'13 대우 NEW BS090", fuel: "디젤", engine: "DL06K", displacement: "5.9L", mileage: "365,000km(추정)", date: "2022-07", regDate: "2013/02/01", cancelDate: "2022/07/22", isFirst: false },
-    { carNum: "2965", model: "'15 대우 NEW BS090", fuel: "디젤", engine: "ISB6.7E6", displacement: "6.7L", mileage: "609,338km", date: "2026-06", regDate: "2015/11/25", cancelDate: "2026/06/18", isFirst: false },
-    { carNum: "2965", model: "'20 현대 그린시티 F/L", fuel: "CNG", engine: "C6GB", displacement: "6.8L", mileage: "348,000km", date: "2026-06", regDate: "2020/09/25", cancelDate: "운행 중", isFirst: false },
-    
-    { carNum: "2966", model: "'09 대우 BS090 로얄미디 F/L", fuel: "NGV", engine: "GE08TI", displacement: "8.0L", mileage: "541,989km(추정)", date: "2018-03", regDate: "2009/03/19", cancelDate: "2018/03/27", isFirst: true, rowSpan: 3 },
-    { carNum: "2966", model: "'16 대우 NEW BS090", fuel: "디젤", engine: "ISB6.7E6", displacement: "6.7L", mileage: "491,374km", date: "2026-04", regDate: "2016/03/29", cancelDate: "2026/04/22", isFirst: false },
-    { carNum: "2966", model: "'20 NSAC 저상 2차 F/L", fuel: "CNG", engine: "C6AF", displacement: "11.6L", mileage: "345,669km", date: "2026-07", regDate: "2020/05/15", cancelDate: "운행 중", isFirst: false },
-  ];
-
   const toggleStory = (id) => {
     setOpenStoryId(openStoryId === id ? null : id);
   };
@@ -112,7 +101,7 @@ export default function BusTracker() {
           <span className="text-xl font-black text-emerald-400 tracking-wider cursor-pointer" onClick={() => setActiveTab('main')}>
             203번 가이드
           </span>
-          <span className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded-md font-mono">v1.4.1</span>
+          <span className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded-md font-mono">v1.4.2</span>
         </div>
 
         <div className="grid grid-cols-2 md:flex gap-1 bg-gray-950 p-1 rounded-xl border border-gray-800 text-xs font-bold w-full md:w-max">
