@@ -101,7 +101,7 @@ export default function BusTracker() {
           <span className="text-xl font-black text-emerald-400 tracking-wider cursor-pointer" onClick={() => setActiveTab('main')}>
             203번 가이드
           </span>
-          <span className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded-md font-mono">v1.4.2</span>
+          <span className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded-md font-mono">v1.4.3</span>
         </div>
 
         <div className="grid grid-cols-2 md:flex gap-1 bg-gray-950 p-1 rounded-xl border border-gray-800 text-xs font-bold w-full md:w-max">
@@ -402,6 +402,9 @@ export default function BusTracker() {
                 <h4 className="text-emerald-400 font-bold mb-1.5">🛠️ 개발 및 디자인</h4>
                 <p className="text-gray-300 font-medium">Rung2ne</p>
                 <p className="text-gray-500 mt-0.5 font-mono text-[10px] md:text-[11px]">Next.js / Tailwind CSS / React</p>
+                <p className="text-gray-500 mt-0.5 font-mono text-[10px] md:text-[11px]"></p>
+                <p className="text-gray-300 font-medium">Gemini</p>
+                <p className="text-gray-500 mt-0.5 font-mono text-[10px] md:text-[11px]">버스 이미지 생성</p>
               </div>
               <div className="bg-gray-950 p-4 rounded-xl border border-gray-800 break-keep">
                 <h4 className="text-emerald-400 font-bold mb-1.5">📊 참고 자료 및 API 출처</h4>
