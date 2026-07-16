@@ -52,6 +52,7 @@ export default function BusTracker() {
   };
 
   const fetchBusData = async () => {
+    setLoading(true);
     try {
       const res = await fetch('/api/bus');
       const xmlText = await res.text();
@@ -101,7 +102,7 @@ export default function BusTracker() {
           <span className="text-xl font-black text-emerald-400 tracking-wider cursor-pointer" onClick={() => setActiveTab('main')}>
             203번 가이드
           </span>
-          <span className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded-md font-mono">v1.4.3</span>
+          <span className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded-md font-mono">v1.4.4</span>
         </div>
 
         <div className="grid grid-cols-2 md:flex gap-1 bg-gray-950 p-1 rounded-xl border border-gray-800 text-xs font-bold w-full md:w-max">
@@ -124,13 +125,13 @@ export default function BusTracker() {
                 <button 
                   onClick={fetchBusData} 
                   disabled={loading}
-                  className="flex-1 sm:flex-none justify-center bg-gray-900 border border-emerald-500/30 hover:bg-emerald-950/40 text-emerald-400 text-xs font-bold px-3 py-2.5 rounded-xl transition-all shadow-md flex items-center gap-1 disabled:opacity-50"
+                  className="flex-1 sm:flex-none justify-center bg-gray-900 border border-emerald-500/30 hover:bg-emerald-950/40 text-emerald-400 text-xs font-bold px-3 py-2.5 rounded-xl transition-all shadow-md flex items-center gap-1 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {loading ? '🔄 갱신 중...' : '🔄 새로고침'}
                 </button>
                 <button 
                   onClick={() => setIsTimetableOpen(true)}
-                  className="flex-1 sm:flex-none justify-center bg-gray-900 border border-emerald-500/30 hover:bg-emerald-950/40 text-emerald-400 text-xs font-bold px-3 py-2.5 rounded-xl transition-all shadow-md flex items-center gap-1"
+                  className="flex-1 sm:flex-none justify-center bg-gray-900 border border-emerald-500/30 hover:bg-emerald-950/40 text-emerald-400 text-xs font-bold px-3 py-2.5 rounded-xl transition-all shadow-md flex items-center gap-1 cursor-pointer"
                 >
                   📅 시간표
                 </button>
@@ -313,6 +314,7 @@ export default function BusTracker() {
                   <tr className="bg-gray-950 text-gray-400 font-bold border-b border-gray-800">
                     <th className="px-4 py-3 text-center text-emerald-400">차호</th>
                     <th className="px-4 py-3 text-center">차종</th>
+                    <th className="px-4 py-3 text-center">사용기간</th>
                     <th className="px-4 py-3 text-center">연료</th>
                     <th className="px-4 py-3 text-center">엔진</th>
                     <th className="px-4 py-3 text-center">배기량</th>
@@ -327,10 +329,11 @@ export default function BusTracker() {
                     <tr key={idx} className="hover:bg-gray-850/40 transition-colors">
                       {row.isFirst && (
                         <td rowSpan={row.rowSpan} className="px-4 py-3 bg-gray-950 font-black text-center text-sm border-r border-gray-800 text-emerald-400 align-middle">
-                          {row.carNum}호
+                          {row.carNum}
                         </td>
                       )}
                       <td className="px-4 py-3 font-semibold text-white">{row.model}</td>
+                      <td className="px-4 py-3 text-center font-mono text-gray-400">{row.period}</td>
                       <td className="px-4 py-3 text-center text-gray-400">{row.fuel}</td>
                       <td className="px-4 py-3 text-center font-mono text-gray-400">{row.engine}</td>
                       <td className="px-4 py-3 text-center font-mono text-gray-400">{row.displacement}</td>
@@ -446,7 +449,9 @@ export default function BusTracker() {
                 <span className="bg-blue-600 text-white font-extrabold text-[10px] px-2 py-0.5 rounded-full uppercase">{selectedBus.details?.fuel || "연료 미상"}</span>
                 <span className="bg-gray-800 text-gray-400 text-[10px] px-2 py-0.5 rounded-full">{selectedBus.details?.Euro || "Euro 규격 미상"}</span>
               </div>
-              <h3 className="text-2xl font-black text-white mt-1.5 font-mono tracking-wide">{selectedBus.bus.carno}</h3>
+              <h3 className="text-2xl font-custom text-white mt-1.5 font-mono tracking-wide">
+                {selectedBus.bus.carno.replace(/(부산)?\s*(\d{2,3}[가-힣])\s*(\d{4})/, '부산 $2 $3')}
+              </h3>
               <p className="text-xs text-gray-400 mt-1">현재 정류장: <span className="text-yellow-400 font-bold">{selectedBus.bus.bstopnm}</span> (#{selectedBus.bus.bstopidx})</p>
             </header>
             <div className="border border-gray-800 rounded-xl overflow-hidden bg-gray-950 text-xs">
