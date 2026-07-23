@@ -1,4 +1,4 @@
-export const metadata: Metadata = {
+export const metadata = {
   title: '부산 203 가이드',
   verification: {
     google: '0DwrNijB8YYnZEzK9yXQX9zdf9LRFZQXmSt6SqN7IUk',
