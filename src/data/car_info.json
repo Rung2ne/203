@@ -84,17 +84,17 @@
         "date": "2026/06/02"
     },
     "71자2967" : {
-        "model": "대우 NEW BS090",
-        "year": 2016,
-        "fuel": "디젤",
-        "capacity": "29인승",
-        "engine": "커민스 ISB6.7E6",
-        "displacement": "6.7L",
+        "model": "현대 그린시티 F/L",
+        "year": 2020,
+        "fuel": "CNG",
+        "capacity": "21인승",
+        "engine": "현대 C6GB",
+        "displacement": "6.8L",
         "Euro": "Euro 6",
         "transmission": "T05S5",
-        "mileage": "401,318km",
-        "manufacture": "2016/03/18",
-        "registration": "2016/03/29",
-        "date": "2026/03/29"
+        "mileage": "349,600km",
+        "manufacture": "2020/08/20",
+        "registration": "2020/09/18",
+        "date": "2026/09/27"
     }
 }
