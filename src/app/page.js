@@ -120,10 +120,12 @@ export default function BusTracker() {
         </div>
 
         <div className="grid grid-cols-2 md:flex gap-1 bg-gray-950 p-1 rounded-xl border border-gray-800 text-xs font-bold w-full md:w-max">
-          <button onClick={() => setActiveTab('main')} className={`px-2 md:px-6 py-2 rounded-lg transition-all text-center ${activeTab === 'main' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>노선도&운행현황</button>
-          <button onClick={() => setActiveTab('records')} className={`px-2 md:px-6 py-2 rounded-lg transition-all text-center ${activeTab === 'records' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>역대 차량현황</button>
-          <button onClick={() => setActiveTab('behind')} className={`px-2 md:px-6 py-2 rounded-lg transition-all text-center ${activeTab === 'behind' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>비하인드 스토리</button>
-          <button onClick={() => setActiveTab('credits')} className={`px-2 md:px-6 py-2 rounded-lg transition-all text-center ${activeTab === 'credits' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>크레딧</button>
+          <button onClick={() => setActiveTab('main')} className={`px-2 md:px-2 py-1.5 rounded-lg transition-all text-center ${activeTab === 'main' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>노선도&운행현황</button>
+          <button onClick={() => setActiveTab('behind')} className={`px-2 md:px-2 py-1.5 rounded-lg transition-all text-center ${activeTab === 'behind' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>비하인드 스토리</button>
+          <button onClick={() => setActiveTab('history')} className={`px-2 md:px-2 py-1.5 rounded-lg transition-all text-center ${activeTab === 'history' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>산성교통의 역사🛠️</button>
+          <button onClick={() => setActiveTab('records')} className={`px-2 md:px-2 py-1.5 rounded-lg transition-all text-center ${activeTab === 'records' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>역대 차량현황</button>
+          <button onClick={() => setActiveTab('gallery')} className={`px-2 md:px-2 py-1.5 rounded-lg transition-all text-center ${activeTab === 'gallery' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>갤러리🛠️</button>
+          <button onClick={() => setActiveTab('credits')} className={`px-2 md:px-2 py-1.5 rounded-lg transition-all text-center ${activeTab === 'credits' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>크레딧</button>
         </div>
       </div>
 
@@ -414,41 +416,76 @@ export default function BusTracker() {
                 본 웹사이트는 203번 좌석버스를 이용하려는 타지인들과 버스 동호인들을 위해 제작된 비공식 가이드입니다.
               </p>
             </div>
-            <div className="flex flex-col gap-4 text-xs">
-              <div className="bg-gray-950 p-4 rounded-xl border border-gray-800 break-keep">
-                <h4 className="text-emerald-400 font-bold mb-1.5">🛠️ 개발 및 디자인</h4>
-                <p className="text-gray-300 font-medium">Rung2ne</p>
-                <p className="text-gray-500 mt-0.5 font-mono text-[10px] md:text-[11px]">Next.js / Tailwind CSS / React</p>
-                <p className="text-gray-500 mt-0.5 font-mono text-[10px] md:text-[11px]"></p>
-                <p className="text-gray-300 font-medium">Gemini</p>
-                <p className="text-gray-500 mt-0.5 font-mono text-[10px] md:text-[11px]">버스 이미지 생성</p>
+            
+            <div className="flex flex-col md:flex-row gap-4 text-xs">
+              
+              <div className="flex-1 flex flex-col gap-4 h-fit">
+                
+                <div className="bg-gray-950 p-4 md:p-5 rounded-xl border border-gray-800 break-keep flex flex-col gap-3">
+                  <h4 className="text-emerald-400 font-bold border-b border-gray-800/50 pb-2 mb-1">🛠️ 개발 및 디자인</h4>
+                  
+                  <div className="flex justify-between items-center bg-gray-900/50 p-2.5 rounded-lg border border-gray-800/50">
+                    <span className="text-gray-300 font-bold">Rung2ne</span>
+                    <span className="text-emerald-500/80 font-mono text-[10px] md:text-[11px] bg-emerald-950/30 px-2 py-0.5 rounded">프로그래밍</span>
+                  </div>
+                  
+                  <div className="flex justify-between items-center bg-gray-900/50 p-2.5 rounded-lg border border-gray-800/50">
+                    <span className="text-gray-300 font-bold">Gemini</span>
+                    <span className="text-blue-400/80 font-mono text-[10px] md:text-[11px] bg-blue-950/30 px-2 py-0.5 rounded">버스 아이콘 생성</span>
+                  </div>
+                </div>
+
+                <div className="bg-gray-950 p-4 md:p-5 rounded-xl border border-gray-800 break-keep flex flex-col gap-3">
+                  <h4 className="text-emerald-400 font-bold border-b border-gray-800/50 pb-2 mb-1">⚙️ API 및 리소스</h4>
+                  
+                  <a href="https://www.data.go.kr/data/15092750/openapi.do" target="_blank" rel="noopener noreferrer" className="flex justify-between items-center bg-gray-900/50 p-2.5 rounded-lg border border-gray-800/50 hover:border-emerald-500/50 transition-colors">
+                    <span className="text-gray-300 font-bold text-[11px] md:text-xs">부산광역시 버스정보시스템</span>
+                    <span className="text-purple-400/80 font-mono text-[10px] md:text-[11px] bg-purple-950/30 px-2 py-0.5 rounded">공공 API</span>
+                  </a>
+                  
+                  <a href="https://www.gumi.go.kr/portal/contents.do?mid=0502070000" target="_blank" rel="noopener noreferrer" className="flex justify-between items-center bg-gray-900/50 p-2.5 rounded-lg border border-gray-800/50 hover:border-emerald-500/50 transition-colors">
+                    <span className="text-gray-300 font-bold">낭만있구미체</span>
+                    <span className="text-yellow-400/80 font-mono text-[10px] md:text-[11px] bg-yellow-950/30 px-2 py-0.5 rounded">웹 폰트</span>
+                  </a>
+                </div>
+
               </div>
-              <div className="bg-gray-950 p-4 rounded-xl border border-gray-800 break-keep">
-                <h4 className="text-emerald-400 font-bold mb-1.5">📊 참고 자료 및 API 출처</h4>
-                <ul className="text-gray-300 space-y-2 pl-4 list-disc font-sans text-[11px] md:text-xs marker:text-gray-600">
-                  <li>부산광역시 부산버스정보시스템 API</li>
-                  <li>부산역사문화대전</li>
-                  <li>나무위키</li>
-                  <li>
+              
+              <div className="flex-[2] bg-gray-950 p-4 md:p-5 rounded-xl border border-gray-800 break-keep h-fit">
+                <h4 className="text-emerald-400 font-bold border-b border-gray-800/50 pb-2 mb-3">📊 참고 자료 및 출처</h4>
+                <ul className="text-gray-300 space-y-3 list-none font-sans text-[11px] md:text-xs">
+                  <li className="flex items-start gap-1.5"><span className="text-gray-600 mt-0.5">▪</span> 나무위키</li>
+                  <li className="flex items-start gap-1.5"><span className="text-gray-600 mt-0.5">▪</span> 부산역사문화대전</li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-gray-600 mt-0.5">▪</span> 
                     <a href="https://www.kookje.co.kr/news2011/asp/newsbody.asp?code=0700&key=20100507.22019202533" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 hover:underline transition-colors">
                       {`故 성산의 발자취 '부산 산악계의 영원한 큰형님, 그토록 사랑했던 금정산에 잠들다', <국제신문>`}
                     </a>
                   </li>
-                  <li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-gray-600 mt-0.5">▪</span> 
                     <a href="https://www.joongang.co.kr/article/3825182" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 hover:underline transition-colors">
                       {`대통령의 맛집 ③ 박정희 전대통령이 뒤봐준 막걸리, <중앙일보>`}
                     </a>
                   </li>
-                  <li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-gray-600 mt-0.5">▪</span> 
                     <a href="https://www.kookje.co.kr/news2011/asp/newsbody.asp?code=2500&key=20100302.22022194538" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 hover:underline transition-colors">
                       {`부산의 맛 <10> 산성 흑염소불고기, <국제신문>`}
+                    </a>
+                  </li>
+                  <li className="flex items-start gap-1.5">
+                    <span className="text-gray-600 mt-0.5">▪</span> 
+                    <a href="https://blog.naver.com/rung2ne_/224341976267" target="_blank" rel="noopener noreferrer" className="hover:text-emerald-400 hover:underline transition-colors">
+                      {'부산 산성교통 역대 차량현황 (본인 운영)'}
                     </a>
                   </li>
                 </ul>
               </div>
             </div>
-            <div className="text-center text-[9px] md:text-[10px] text-gray-600 pt-2 border-t border-gray-800 font-mono">
-              ©2026 203 Guide Project. All Rights Reserved.
+            
+            <div className="text-center text-[9px] md:text-[10px] text-gray-600 pt-4 border-t border-gray-800 font-mono">
+              ©2026 Project 203. All Rights Reserved.
             </div>
           </div>
         )}
