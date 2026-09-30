@@ -102,7 +102,21 @@ export default function BusTracker() {
           <span className="text-xl font-black text-emerald-400 tracking-wider cursor-pointer" onClick={() => setActiveTab('main')}>
             203번 가이드
           </span>
-          <span className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded-md font-mono">v1.4.4</span>
+          <div className="flex items-center gap-2">
+            <span className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded-md font-mono shadow-sm">v1.4.5</span>
+            <a 
+              href="https://myhits.vercel.app" 
+              target="_blank" 
+              rel="noopener noreferrer" 
+              className="flex items-center hover:opacity-80 transition-opacity drop-shadow-md"
+            >
+              <img 
+                src="https://myhits.vercel.app/api/hit/https%3A%2F%2F203-nu.vercel.app?color=green&label=%EB%B0%A9%EB%AC%B8%EC%9E%90%EC%88%98+++&size=small" 
+                alt="방문자수" 
+                className="h-[22px] object-contain rounded" 
+              />
+            </a>
+          </div>
         </div>
 
         <div className="grid grid-cols-2 md:flex gap-1 bg-gray-950 p-1 rounded-xl border border-gray-800 text-xs font-bold w-full md:w-max">
