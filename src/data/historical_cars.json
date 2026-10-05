@@ -1,6 +1,6 @@
 [
-  { "carNum": "2956", "model": "'01 대우 BM090", "period": "'99~'09", "fuel": "디젤", "engine": "D1146TI", "displacement": "8.0L", "mileage": "알수없음", "date": "2009-04", "regDate": "1999/07/13", "cancelDate": "2009/04/01", "isFirst": true, "rowSpan": 1 },
-  { "carNum": "2957", "model": "'01 대우 BM090", "period": "'99~'09", "fuel": "디젤", "engine": "D1146TI", "displacement": "8.0L", "mileage": "알수없음", "date": "2009-04", "regDate": "1999/07/13", "cancelDate": "2009/04/01", "isFirst": true, "rowSpan": 1 },
+  { "carNum": "2956", "model": "'99 대우 BM090", "period": "'99~'09", "fuel": "디젤", "engine": "D1146TI", "displacement": "8.0L", "mileage": "알수없음", "date": "2009-04", "regDate": "1999/07/13", "cancelDate": "2009/04/01", "isFirst": true, "rowSpan": 1 },
+  { "carNum": "2957", "model": "'99 대우 BM090", "period": "'99~'09", "fuel": "디젤", "engine": "D1146TI", "displacement": "8.0L", "mileage": "알수없음", "date": "2009-04", "regDate": "1999/07/13", "cancelDate": "2009/04/01", "isFirst": true, "rowSpan": 1 },
   { "carNum": "2958", "model": "'01 대우 BM090", "period": "'01~'09", "fuel": "디젤", "engine": "DE08TiS", "displacement": "8.0L", "mileage": "77,976km", "date": "2009-06", "regDate": "2001/03/20", "cancelDate": "2009/06/08", "isFirst": true, "rowSpan": 1 },
   { "carNum": "2959", "model": "'01 대우 BM090", "period": "'01~'09", "fuel": "디젤", "engine": "DE08TiS", "displacement": "8.0L", "mileage": "393,663km", "date": "2009-05", "regDate": "2001/03/20", "cancelDate": "2009/05/01", "isFirst": true, "rowSpan": 1 },
   { "carNum": "2960", "model": "'01 대우 BM090", "period": "'01~'09", "fuel": "디젤", "engine": "DE08TiS", "displacement": "8.0L", "mileage": "알수없음", "date": "2009", "regDate": "2001/??/??", "cancelDate": "2009/??/??", "isFirst": true, "rowSpan": 1 },
