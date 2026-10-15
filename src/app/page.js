@@ -6,6 +6,8 @@ import carInfo from '@/data/car_info.json';
 import stopInfo from '@/data/stop_info.json';
 import behindStories from '@/data/behind_info.json';
 import historicalCars from '@/data/historical_cars.json';
+import history from '@/data/history.json';
+import gallery from '@/data/gallery.json';
 import './font.css';
 
 const PAIRED_ROWS = [
@@ -487,6 +489,80 @@ export default function BusTracker() {
             <div className="text-center text-[9px] md:text-[10px] text-gray-600 pt-4 border-t border-gray-800 font-mono">
               ©2026 Project 203. All Rights Reserved.
             </div>
+          </div>
+        )}
+
+        {activeTab === 'history' && (
+          <div className="w-full">
+            <div className="mb-8">
+              <h2 className="text-lg md:text-xl font-black text-white">산성교통 역사</h2>
+              <p className="text-[11px] md:text-xs text-gray-500 mt-1 break-keep">산성교통과 203번의 역사</p>
+            </div>
+            
+            <div className="relative border-l-2 border-gray-800 ml-3 md:ml-4 space-y-8 pb-4">
+              {history.map((item, index) => (
+                <div key={item.id} className="relative pl-6 md:pl-8 group">
+                  <div className={`absolute -left-[7px] top-1 w-3 h-3 rounded-full transition-all duration-300 ${index === 0 ? 'bg-emerald-500 shadow-[0_0_10px_rgba(16,185,129,0.5)] group-hover:scale-125' : 'bg-gray-700 border-2 border-gray-950 group-hover:bg-emerald-500'}`}></div>
+                  <div className={`${index === 0 ? 'text-emerald-400' : 'text-gray-500'} font-mono text-xs font-bold mb-1`}>{item.period}</div>
+                  <h3 className={`${index === 0 ? 'text-gray-200' : 'text-gray-300'} font-bold text-sm md:text-base mb-2`}>{item.title}</h3>
+                  <div className="bg-gray-900 border border-gray-800 p-4 rounded-xl shadow-md">
+                    <p className="text-gray-400 text-[11px] md:text-xs leading-relaxed break-keep">
+                      {item.content}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {activeTab === 'gallery' && (
+          <div className="w-full space-y-10">
+            <div>
+              <h2 className="text-lg md:text-xl font-black text-white mb-1">갤러리</h2>
+              <p className="text-[11px] md:text-xs text-gray-500 break-keep">203번 버스와 산성마을 사진들</p>
+            </div>
+            
+            {gallery.map((section, sIdx) => (
+              <div key={sIdx} className="space-y-4">
+                <div className="flex justify-between items-end border-b border-gray-800/50 pb-2">
+                  <h3 className="text-base font-bold text-emerald-400">{section.sectionName}</h3>
+                  <span className="text-[10px] text-gray-600 font-mono bg-gray-900 px-2 py-1 rounded border border-gray-800">
+                    {section.items.length}장
+                  </span>
+                </div>
+                
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 auto-rows-[120px] md:auto-rows-[160px] grid-flow-dense">
+                  {section.items.map((item) => (
+                    <div 
+                      key={item.id} 
+                      className={`${item.sizeClass} ${!item.imageUrl ? item.bgColor : 'bg-gray-900'} border border-gray-800 rounded-2xl md:rounded-3xl overflow-hidden group cursor-pointer relative flex flex-col justify-center items-center shadow-md transition-transform hover:scale-[1.02] duration-300`}
+                    >
+                      {item.imageUrl ? (
+                        <img 
+                          src={item.imageUrl} 
+                          alt="gallery item" 
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
+                      ) : (
+                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/10 group-hover:bg-black/30 transition-all duration-300">
+                          <span className="text-3xl md:text-4xl drop-shadow-lg scale-90 group-hover:scale-110 transition-transform duration-300">
+                            {item.emoji}
+                          </span>
+                        </div>
+                      )}
+                      
+                      {item.imageUrl && (
+                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                          <span className="text-white text-xs font-bold truncate">크게 보기</span>
+                        </div>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
+            
           </div>
         )}
       </div>

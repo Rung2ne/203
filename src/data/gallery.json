@@ -1,0 +1,54 @@
+[
+  {
+    "sectionName": "📸 차고지의 풍경",
+    "items": [
+      {
+        "id": "g1",
+        "imageUrl": "images/2966.png",
+        "sizeClass": "col-span-2 row-span-2 md:col-span-2 md:row-span-2",
+        "bgColor": "bg-emerald-800",
+        "emoji": "🚌"
+      },
+      {
+        "id": "g2",
+        "imageUrl": "images/2965.png",
+        "sizeClass": "col-span-1 row-span-1",
+        "bgColor": "bg-blue-800",
+        "emoji": "🏙️"
+      },
+      {
+        "id": "g3",
+        "imageUrl": "images/2963.png",
+        "sizeClass": "col-span-1 row-span-1",
+        "bgColor": "bg-red-800",
+        "emoji": "🏅"
+      },
+      {
+        "id": "g4",
+        "imageUrl": "images/2963.png",
+        "sizeClass": "col-span-2 row-span-1 md:col-span-1 md:row-span-1",
+        "bgColor": "bg-yellow-600",
+        "emoji": "🔧"
+      },
+      {
+        "id": "g5",
+        "imageUrl": "images/2963.png",
+        "sizeClass": "col-span-1 row-span-1",
+        "bgColor": "bg-green-700",
+        "emoji": "🌲"
+      }
+    ]
+  },
+  {
+    "sectionName": "🚌 역대 차량 스냅샷",
+    "items": [
+      {
+        "id": "g6",
+        "imageUrl": "images/2963.png",
+        "sizeClass": "col-span-2 row-span-1",
+        "bgColor": "bg-purple-800",
+        "emoji": "👥"
+      }
+    ]
+  }
+]
