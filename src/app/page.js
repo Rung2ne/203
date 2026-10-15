@@ -105,7 +105,7 @@ export default function BusTracker() {
             203번 가이드
           </span>
           <div className="flex items-center gap-2">
-            <span className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded-md font-mono shadow-sm">v1.4.5</span>
+            <span className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded-md font-mono shadow-sm">v1.5.1</span>
             <a 
               href="https://myhits.vercel.app" 
               target="_blank" 
