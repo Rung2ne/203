@@ -85,11 +85,16 @@
       {
         "id": "g351",
         "imageUrl": "images/CarFromGyeongGi2.jpg",
-        "sizeClass": "col-span-1 row-span-2 md:col-span-1 md:row-span-2"
+        "sizeClass": "col-span-1 row-span-2"
       },
       {
         "id": "g352",
         "imageUrl": "images/CarFromGyeongGi1.jpg",
+        "sizeClass": "col-span-1 row-span-1"
+      },
+      {
+        "id": "g353",
+        "imageUrl": "images/CarFromGyeongGi3.jpg",
         "sizeClass": "col-span-1 row-span-1"
       }
     ]
