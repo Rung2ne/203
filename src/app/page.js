@@ -105,7 +105,7 @@ export default function BusTracker() {
             203번 가이드
           </span>
           <div className="flex items-center gap-2">
-            <span className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded-md font-mono shadow-sm">v1.5.1</span>
+            <span className="text-xs bg-gray-800 text-gray-400 px-2 py-0.5 rounded-md font-mono shadow-sm">v1.5.2</span>
             <a 
               href="https://myhits.vercel.app" 
               target="_blank" 
@@ -126,7 +126,7 @@ export default function BusTracker() {
           <button onClick={() => setActiveTab('behind')} className={`px-2 md:px-2 py-1.5 rounded-lg transition-all text-center ${activeTab === 'behind' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>비하인드 스토리</button>
           <button onClick={() => setActiveTab('history')} className={`px-2 md:px-2 py-1.5 rounded-lg transition-all text-center ${activeTab === 'history' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>산성교통의 역사🛠️</button>
           <button onClick={() => setActiveTab('records')} className={`px-2 md:px-2 py-1.5 rounded-lg transition-all text-center ${activeTab === 'records' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>역대 차량현황</button>
-          <button onClick={() => setActiveTab('gallery')} className={`px-2 md:px-2 py-1.5 rounded-lg transition-all text-center ${activeTab === 'gallery' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>갤러리🛠️</button>
+          <button onClick={() => setActiveTab('gallery')} className={`px-2 md:px-2 py-1.5 rounded-lg transition-all text-center ${activeTab === 'gallery' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>갤러리</button>
           <button onClick={() => setActiveTab('credits')} className={`px-2 md:px-2 py-1.5 rounded-lg transition-all text-center ${activeTab === 'credits' ? 'bg-emerald-600 text-white shadow-md' : 'text-gray-400 hover:text-gray-200'}`}>크레딧</button>
         </div>
       </div>
@@ -428,9 +428,14 @@ export default function BusTracker() {
                   
                   <div className="flex justify-between items-center bg-gray-900/50 p-2.5 rounded-lg border border-gray-800/50">
                     <span className="text-gray-300 font-bold">Rung2ne</span>
-                    <span className="text-emerald-500/80 font-mono text-[10px] md:text-[11px] bg-emerald-950/30 px-2 py-0.5 rounded">프로그래밍</span>
+                    <span className="text-emerald-500/80 font-mono text-[10px] md:text-[11px] bg-emerald-950/30 px-2 py-0.5 rounded">프로그래밍, 사진 제공</span>
                   </div>
                   
+                  <div className="flex justify-between items-center bg-gray-900/50 p-2.5 rounded-lg border border-gray-800/50">
+                    <span className="text-gray-300 font-bold">pjwoo0421</span>
+                    <span className="text-emerald-500/80 font-mono text-[10px] md:text-[11px] bg-emerald-950/30 px-2 py-0.5 rounded">사진 제공</span>
+                  </div>
+
                   <div className="flex justify-between items-center bg-gray-900/50 p-2.5 rounded-lg border border-gray-800/50">
                     <span className="text-gray-300 font-bold">Gemini</span>
                     <span className="text-blue-400/80 font-mono text-[10px] md:text-[11px] bg-blue-950/30 px-2 py-0.5 rounded">버스 아이콘 생성</span>
@@ -536,26 +541,14 @@ export default function BusTracker() {
                   {section.items.map((item) => (
                     <div 
                       key={item.id} 
-                      className={`${item.sizeClass} ${!item.imageUrl ? item.bgColor : 'bg-gray-900'} border border-gray-800 rounded-2xl md:rounded-3xl overflow-hidden group cursor-pointer relative flex flex-col justify-center items-center shadow-md transition-transform hover:scale-[1.02] duration-300`}
+                      className={`${item.sizeClass} bg-gray-900 border border-gray-800 rounded-2xl md:rounded-3xl overflow-hidden relative flex flex-col justify-center items-center shadow-md`}
                     >
-                      {item.imageUrl ? (
+                      {item.imageUrl && (
                         <img 
                           src={item.imageUrl} 
                           alt="gallery item" 
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          className="w-full h-full object-cover"
                         />
-                      ) : (
-                        <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/10 group-hover:bg-black/30 transition-all duration-300">
-                          <span className="text-3xl md:text-4xl drop-shadow-lg scale-90 group-hover:scale-110 transition-transform duration-300">
-                            {item.emoji}
-                          </span>
-                        </div>
-                      )}
-                      
-                      {item.imageUrl && (
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-                          <span className="text-white text-xs font-bold truncate">크게 보기</span>
-                        </div>
                       )}
                     </div>
                   ))}

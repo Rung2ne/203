@@ -3,51 +3,194 @@
     "sectionName": "📸 차고지의 풍경",
     "items": [
       {
-        "id": "g1",
-        "imageUrl": "images/2966.png",
-        "sizeClass": "col-span-2 row-span-2 md:col-span-2 md:row-span-2",
-        "bgColor": "bg-emerald-800",
-        "emoji": "🚌"
+        "id": "g201",
+        "imageUrl": "images/HunnidThousandOnACoupe.jpg",
+        "sizeClass": "col-span-1 row-span-1"
       },
       {
-        "id": "g2",
-        "imageUrl": "images/2965.png",
-        "sizeClass": "col-span-1 row-span-1",
-        "bgColor": "bg-blue-800",
-        "emoji": "🏙️"
+        "id": "g202",
+        "imageUrl": "images/SanSeongGyoTong.jpg",
+        "sizeClass": "col-span-1 row-span-1"
       },
       {
-        "id": "g3",
-        "imageUrl": "images/2963.png",
-        "sizeClass": "col-span-1 row-span-1",
-        "bgColor": "bg-red-800",
-        "emoji": "🏅"
+        "id": "g203",
+        "imageUrl": "images/GarageBackYard2025.jpg",
+        "sizeClass": "col-span-2 row-span-2"
       },
       {
-        "id": "g4",
-        "imageUrl": "images/2963.png",
-        "sizeClass": "col-span-2 row-span-1 md:col-span-1 md:row-span-1",
-        "bgColor": "bg-yellow-600",
-        "emoji": "🔧"
+        "id": "g204",
+        "imageUrl": "images/NightBSLightOn.jpg",
+        "sizeClass": "col-span-1 row-span-1"
       },
       {
-        "id": "g5",
-        "imageUrl": "images/2963.png",
-        "sizeClass": "col-span-1 row-span-1",
-        "bgColor": "bg-green-700",
-        "emoji": "🌲"
+        "id": "g205",
+        "imageUrl": "images/NightGarageGCBS.jpg",
+        "sizeClass": "col-span-1 row-span-1"
       }
     ]
   },
   {
-    "sectionName": "🚌 역대 차량 스냅샷",
+    "sectionName": "🚍 차량 디테일",
     "items": [
       {
-        "id": "g6",
+        "id": "g303",
+        "imageUrl": "images/BSFrontDoorKey.jpg",
+        "sizeClass": "col-span-1 row-span-2"
+      },
+      {
+        "id": "g304",
+        "imageUrl": "images/ThePaint.jpg",
+        "sizeClass": "col-span-1 row-span-1"
+      }
+    ]
+  },
+  {
+    "sectionName": "🔍 서치라이트",
+    "items": [
+      {
+        "id": "g301",
+        "imageUrl": "images/SearchLight1.jpg",
+        "sizeClass": "col-span-2 row-span-2"
+      },
+      {
+        "id": "g302",
+        "imageUrl": "images/SearchLight2.jpg",
+        "sizeClass": "col-span-1 row-span-2"
+      }
+    ]
+  },
+  {
+    "sectionName": "💰 단말기와 요금통",
+    "items": [
+      {
+        "id": "g311",
+        "imageUrl": "images/FareBox.jpg",
+        "sizeClass": "col-span-1 row-span-2"
+      },
+      {
+        "id": "g312",
+        "imageUrl": "images/BusFare1.jpg",
+        "sizeClass": "col-span-1 row-span-1"
+      },
+      {
+        "id": "g313",
+        "imageUrl": "images/BusFare2.jpg",
+        "sizeClass": "col-span-1 row-span-1"
+      }
+    ]
+  },
+  {
+    "sectionName": "🚌 경기도 출신 차량들이라는 것을 알 수 있는 이미지",
+    "items": [
+      {
+        "id": "g351",
+        "imageUrl": "images/CarFromGyeongGi2.jpg",
+        "sizeClass": "col-span-1 row-span-2 md:col-span-1 md:row-span-2"
+      },
+      {
+        "id": "g352",
+        "imageUrl": "images/CarFromGyeongGi1.jpg",
+        "sizeClass": "col-span-1 row-span-1"
+      }
+    ]
+  },
+  {
+    "sectionName": "🚌 차량 이미지",
+    "items": [
+      {
+        "id": "g401",
+        "imageUrl": "images/2961Front.jpg",
+        "sizeClass": "col-span-1 row-span-2 md:col-span-1 md:row-span-2"
+      },
+      {
+        "id": "g402",
+        "imageUrl": "images/2964Front.jpg",
+        "sizeClass": "col-span-1 row-span-2 md:col-span-1 md:row-span-2"
+      },
+      {
+        "id": "g403",
+        "imageUrl": "images/2967Front.jpg",
+        "sizeClass": "col-span-1 row-span-2 md:col-span-1 md:row-span-2"
+      }
+    ]
+  },
+  {
+    "sectionName": "🚍 차량 아이콘 원본",
+    "items": [
+      {
+        "id": "g101",
         "imageUrl": "images/2963.png",
-        "sizeClass": "col-span-2 row-span-1",
-        "bgColor": "bg-purple-800",
-        "emoji": "👥"
+        "sizeClass": "col-span-1 row-span-1"
+      },
+      {
+        "id": "g102",
+        "imageUrl": "images/2965.png",
+        "sizeClass": "col-span-1 row-span-1"
+      },
+      {
+        "id": "g103",
+        "imageUrl": "images/2966.png",
+        "sizeClass": "col-span-1 row-span-1"
+      }
+    ]
+  },
+  {
+    "sectionName": "⁉️ 태성여객 금정3 BS090 부품셔틀",
+    "items": [
+      {
+        "id": "g601",
+        "imageUrl": "images/GeumJeong3BS1.jpg",
+        "sizeClass": "col-span-1 row-span-1"
+      },
+      {
+        "id": "g602",
+        "imageUrl": "images/GeumJeong3BS2.jpg",
+        "sizeClass": "col-span-1 row-span-1"
+      },
+      {
+        "id": "g603",
+        "imageUrl": "images/GeumJeong3BS3.jpg",
+        "sizeClass": "col-span-1 row-span-2"
+      },
+      {
+        "id": "g604",
+        "imageUrl": "images/GarageBackYard2025.jpg",
+        "sizeClass": "col-span-2 row-span-1"
+      }
+    ]
+  },
+  {
+    "sectionName": "⁉️ 2026 그린시티 대차 기간",
+    "items": [
+      {
+        "id": "g611",
+        "imageUrl": "images/N2967_before.jpg",
+        "sizeClass": "col-span-1 row-span-2"
+      },
+      {
+        "id": "g612",
+        "imageUrl": "images/GCChanging.jpg",
+        "sizeClass": "col-span-1 row-span-2"
+      }
+    ]
+  },
+  {
+    "sectionName": "⁉️ 롯데백화점 동래점 ~ 금정구청 구간 중앙대로 확장 사업 중 임시 버스 정류장",
+    "items": [
+      {
+        "id": "g621",
+        "imageUrl": "images/TempBusStopSign1.jpg",
+        "sizeClass": "col-span-1 row-span-2"
+      },
+      {
+        "id": "g622",
+        "imageUrl": "images/TempBusStopSign2.jpg",
+        "sizeClass": "col-span-1 row-span-2"
+      },
+      {
+        "id": "g623",
+        "imageUrl": "images/TempBusStopShed.jpg",
+        "sizeClass": "col-span-1 row-span-2"
       }
     ]
   }
