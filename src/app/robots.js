@@ -1,7 +1,9 @@
 export default function robots() {
   return {
-    userAgent: '*',
-    allow: '/',
+    rules: {
+      userAgent: '*',
+      allow: '/',
+    },
     sitemap: 'https://203-nu.vercel.app/sitemap.xml',
   };
 }
