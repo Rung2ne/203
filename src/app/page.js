@@ -17,7 +17,7 @@ const PAIRED_ROWS = [
   { left: { idx: 4, name: "공해부락 🌿" }, right: { idx: 31, name: "공해부락 🌿" } },
   { left: { idx: 5, name: "남문 🚪" }, right: { idx: 30, name: "남문 🚪" } },
   { left: { idx: 6, name: "동문 🚪" }, right: { idx: 29, name: "동문 🚪" } },
-  { left: { idx: 7, name: "고별대 🖐️" }, right: { idx: 28, name: "고별대 🖐️" } },
+  { left: { idx: 7, name: "고별대 👋" }, right: { idx: 28, name: "고별대 👋" } },
   { left: { idx: 8, name: "삼밭골 ⛰️" }, right: { idx: 27, name: "삼밭골 ⛰️" } },
   { left: { idx: 9, name: "부산대후문 🏫" }, right: { idx: 26, name: "부산대후문 🏫" } },
   { left: null, right: { idx: 25, name: "양로원 🏥" } }, 
