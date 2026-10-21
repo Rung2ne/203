@@ -428,12 +428,17 @@ export default function BusTracker() {
                   
                   <div className="flex justify-between items-center bg-gray-900/50 p-2.5 rounded-lg border border-gray-800/50">
                     <span className="text-gray-300 font-bold">Rung2ne</span>
-                    <span className="text-emerald-500/80 font-mono text-[10px] md:text-[11px] bg-emerald-950/30 px-2 py-0.5 rounded">프로그래밍, 사진 제공</span>
+                    <span className="text-red-500/80 font-mono text-[10px] md:text-[11px] bg-red-950/30 px-2 py-0.5 rounded">웹 엔지니어</span>
+                  </div>
+
+                  <div className="flex justify-between items-center bg-gray-900/50 p-2.5 rounded-lg border border-gray-800/50">
+                    <span className="text-gray-300 font-bold">itami_rjoo</span>
+                    <span className="text-emerald-500/80 font-mono text-[10px] md:text-[11px] bg-emerald-950/30 px-2 py-0.5 rounded">UX 기획</span>
                   </div>
                   
                   <div className="flex justify-between items-center bg-gray-900/50 p-2.5 rounded-lg border border-gray-800/50">
                     <span className="text-gray-300 font-bold">pjwoo0421</span>
-                    <span className="text-emerald-500/80 font-mono text-[10px] md:text-[11px] bg-emerald-950/30 px-2 py-0.5 rounded">사진 제공</span>
+                    <span className="text-emerald-500/80 font-mono text-[10px] md:text-[11px] bg-emerald-950/30 px-2 py-0.5 rounded">포토 디렉터</span>
                   </div>
 
                   <div className="flex justify-between items-center bg-gray-900/50 p-2.5 rounded-lg border border-gray-800/50">
